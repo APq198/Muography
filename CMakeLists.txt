@@ -12,4 +12,9 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/*.hh)	# include/
 add_executable(main main.cc ${sources} ${headers})
 target_link_libraries(main ${Geant4_LIBRARIES})
 
+file(GLOB MACRO_FILES
+  "*.mac"
+)
+file(COPY ${MACRO_FILES} DESTINATION ${PROJECT_BINARY_DIR})
+
 add_custom_target(Muography DEPENDS main)
