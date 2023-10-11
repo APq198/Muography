@@ -9,6 +9,7 @@
 //#include "QGSP_BERT.hh"
 //#include "QGSP_BIC.hh"
 #include "FTFP_BERT.hh"
+#include "QGSP_BERT_HP.hh"
 
 
 #include "constructor.hh"
@@ -36,12 +37,8 @@ int main(int argc, char** argv)
 
 	G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
-	//UImanager -> ApplyCommand("/control/execute init_vis.mac");
-	UImanager->ApplyCommand("/vis/open OGL 600x600-0+0");
-	UImanager->ApplyCommand("/vis/drawVolume");
-	UImanager->ApplyCommand("/vis/viewer/set/autoRefresh true");
-	UImanager->ApplyCommand("/vis/scene/add/trajectories smooth");
-	UImanager->ApplyCommand("/vis/scene/endOfEventAction accumulate");
+	//UImanager -> ApplyCommand("/control/execute vis.mac");
+	UImanager -> ApplyCommand("/control/execute no_gui.mac");
 	ui->SessionStart();
 	return 0;
 }
