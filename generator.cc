@@ -87,7 +87,7 @@ void PrimaryGenerator::MyGeneratePrimaries_Muons(G4Event * anEvent)
 void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 {
 	// defining particle
-	std::cout << "Launching a proton, momentum = " << momentum << std::endl;
+	//std::cout << "Launching a proton, momentum = " << momentum << std::endl;
 	G4ParticleTable * particleTable = G4ParticleTable::GetParticleTable();
 	G4String particleName = "proton";
 	G4ParticleDefinition *particle = particleTable->FindParticle(particleName);

@@ -1,5 +1,6 @@
 #include "action.hh"
 
+
 ActionInitialization::ActionInitialization()
 {}
 
@@ -10,4 +11,13 @@ void ActionInitialization::Build() const
 {
 	PrimaryGenerator * generator  = new PrimaryGenerator();
 	SetUserAction(generator);
+
+	MyRunAction *runAction = new MyRunAction();
+	SetUserAction(runAction);
+}
+
+void ActionInitialization::BuildForMaster() const
+{
+	MyRunAction *runAction = new MyRunAction();
+	SetUserAction(runAction);
 }
