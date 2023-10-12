@@ -4,6 +4,7 @@
 #include "G4VSensitiveDetector.hh"
 #include "G4AnalysisManager.hh"
 #include "G4RunManager.hh"
+#include "globals.hh"
 #include <fstream>
 
 class SensitiveDetector : public G4VSensitiveDetector

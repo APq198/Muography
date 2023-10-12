@@ -17,6 +17,7 @@
 #include "constructor.hh"
 #include "physics.hh"
 #include "action.hh"
+#include "globals.hh"
 
 int main(int argc, char** argv)
 {
@@ -35,7 +36,7 @@ int main(int argc, char** argv)
     //physics->RegisterPhysics(new G4DecayPhysics());
     runManager->SetUserInitialization(physics);
 
-	//runManager->Initialize(); //run/initialize
+	//runManager->Initialize(); // /run/initialize instead
 	
 
 	G4UIExecutive *ui = new G4UIExecutive(argc, argv);
@@ -45,7 +46,14 @@ int main(int argc, char** argv)
 
 	G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
-	UImanager -> ApplyCommand("/control/execute run.mac");
+	if (argc > 1)
+	{
+		G4String macro_file = argv[1];
+		UImanager -> ApplyCommand("/control/execute " + macro_file);
+		if (argc > 2)
+			filename = argv[2];
+	} else 
+		UImanager -> ApplyCommand("/control/execute run.mac");
 	ui->SessionStart();
 	return 0;
 }

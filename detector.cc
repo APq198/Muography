@@ -9,7 +9,11 @@ SensitiveDetector::~SensitiveDetector()
 G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist)
 {
 
-	G4String filename = "output05.csv";
+	G4String filename_;
+	if (filename != "")
+		filename_ = filename;
+	else 
+		filename_ = "noname_output01.csv";
 	
 	G4Track * track = aStep->GetTrack();
 	track->SetTrackStatus(fStopAndKill);
@@ -19,19 +23,19 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist
 	G4ThreeVector direction = aStep->GetPreStepPoint()->GetMomentumDirection();
 	
 	G4bool writePositions = false;
+	G4bool writeDirections = true;
+
 	if(writePositions && isMuon) {
 		G4cout << "muon" << G4endl;
 		std::ofstream myfile;
-		myfile.open(filename, std::ios::app);
+		myfile.open(filename_, std::ios::app);
 		myfile << pos[0] << ", " << pos[1] << ", " << pos[2] << std::endl; 
 		myfile.close();
-	}
-
-	G4bool writeDirections = true;
-	if(writeDirections && isMuon) {
+	} 
+	else if(writeDirections && isMuon) {
 		G4cout << "Muon - writing direction" << G4endl;
 		std::ofstream myfile;
-		myfile.open(filename, std::ios::app);
+		myfile.open(filename_, std::ios::app);
 		myfile 	<< pos[0] << ", " 
 				<< pos[1] << ", " 
 				<< pos[2] << ", " 
