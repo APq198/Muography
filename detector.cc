@@ -10,9 +10,9 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist
 {
 
 	G4String filename_;
-	if (filename != "")
-		filename_ = filename;
-	else 
+	//if (filename != "")
+	//	filename_ = filename;
+	//else 
 		filename_ = "noname_output01.csv";
 	
 	G4Track * track = aStep->GetTrack();

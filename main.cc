@@ -17,7 +17,7 @@
 #include "constructor.hh"
 #include "physics.hh"
 #include "action.hh"
-#include "globals.hh"
+//#include "globals.hh"
 
 int main(int argc, char** argv)
 {
@@ -46,13 +46,13 @@ int main(int argc, char** argv)
 
 	G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
-	if (argc > 1)
+	/*if (argc > 1)
 	{
 		G4String macro_file = argv[1];
 		UImanager -> ApplyCommand("/control/execute " + macro_file);
 		if (argc > 2)
 			filename = argv[2];
-	} else 
+	} else */
 		UImanager -> ApplyCommand("/control/execute run.mac");
 	ui->SessionStart();
 	return 0;
