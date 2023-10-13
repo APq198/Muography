@@ -17,4 +17,9 @@ file(GLOB MACRO_FILES
 )
 file(COPY ${MACRO_FILES} DESTINATION ${PROJECT_BINARY_DIR})
 
+file(GLOB BASH_FILES
+  "*.sh"
+)
+file(COPY ${BASH_FILES} DESTINATION ${PROJECT_BINARY_DIR})
+
 add_custom_target(Muography DEPENDS main)
