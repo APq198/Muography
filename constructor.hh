@@ -31,7 +31,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 		void ConstructSimpleAtmosphere(G4NistManager *, G4LogicalVolume*);
 		G4VPhysicalVolume * ConstructAsteroidScene();
 		G4VPhysicalVolume * ConstructSurfaceScene();
-		G4LogicalVolume *logicWorld, *logicDetector;
+		G4LogicalVolume *logicWorld;
+		G4LogicalVolume *logicDetector = nullptr;
 		virtual void ConstructSDandField();
 		//G4Material Air[10];
 		G4double xWorld, yWorld, zWorld, detectorHeight;

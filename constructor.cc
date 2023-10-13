@@ -178,7 +178,7 @@ G4VPhysicalVolume * DetectorConstruction::Construct()
 	//G4VPhysicalVolume * physWorld = ConstructAsteroidScene();
 	detectorHeight = 1*m;
 	G4VPhysicalVolume * physWorld = ConstructSurfaceScene();
-	ConstructOmniDetector();
+	//ConstructOmniDetector();
 	return physWorld;
 }
 
@@ -187,7 +187,7 @@ void DetectorConstruction::ConstructSDandField()
 {
 	SensitiveDetector *sensDet = new SensitiveDetector("SensitiveDetector");
 
-	if (logicDetector != NULL)
+	if (logicDetector != nullptr)
 	logicDetector->SetSensitiveDetector(sensDet);		// logical Volume of an object accepts 
 														// sensitive detector to become sensitive
 }
