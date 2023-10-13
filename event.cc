@@ -17,7 +17,7 @@ void MyEventAction::BeginOfEventAction(const G4Event * event)
 	 * 				-> GetPosition();
 	 * 				   і все?
 	 */
-	G4cout << "something01" << G4endl;
+	//G4cout << "something01" << G4endl;
 }
 
 

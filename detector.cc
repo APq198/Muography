@@ -6,7 +6,7 @@ SensitiveDetector::SensitiveDetector(G4String name) : G4VSensitiveDetector(name)
 SensitiveDetector::~SensitiveDetector()
 {}
 
-G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist)
+G4bool SensitiveDetector::ProcessHits_Old(G4Step *aStep, G4TouchableHistory * ROhist)
 {
 
 	G4String filename_;
@@ -53,6 +53,8 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist
 	 * aStep -> GetTrack()
 	 * 				-> GetParticleDefinition() -> GetParticleName()
 	 * 				-> GetParticleMomentum()
+	 * 				-> GetKineticEnergy()
+	 * 				-> GetTotalEnergy()
 	 * 				-> SetTrackStatus(fStopAndKill)  			--- detector absorbs this(?) particle
 	 * 		 -> GetPreStepPoint()
 	 * 				-> GetLocalTime()							
@@ -63,6 +65,19 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist
 	*/
 	// go to my_proj for interesting things
 
+
+	return true;
+}
+
+
+G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist)
+{
+	G4Track * track = aStep->GetTrack();
+	G4String particleName = track->GetParticleDefinition()->GetParticleName();
+	G4double energy = track->GetTotalEnergy();
+	G4cout 	<< particleName << ", "
+			<< energy
+			<< G4endl;
 
 	return true;
 }

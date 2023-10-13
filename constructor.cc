@@ -50,11 +50,11 @@ void DetectorConstruction::ConstructObstacle(G4NistManager *nist, G4LogicalVolum
 	G4VPhysicalVolume * physWorld = new G4PVPlacement(0, G4ThreeVector(3.*m, -3*m, 1*m), logicObstacle, "physObstacle", logicWorld, false, 0, true);
 }
 
-void DetectorConstruction::ConstructOmniDetector(G4NistManager *nist, G4LogicalVolume* logicWorld)
+void DetectorConstruction::ConstructOmniDetector()
 {
-	G4Box * solidDetector = new G4Box("solidDetector", 4.9*m, .05*m, 4.9*m);
+	G4Box * solidDetector = new G4Box("solidDetector", xWorld, detectorHeight/2.0, zWorld);
 	logicDetector = new G4LogicalVolume(solidDetector, nist->FindOrBuildMaterial("G4_WATER"), "logicDetector");
-	G4VPhysicalVolume * physDetector0 = new G4PVPlacement(0, G4ThreeVector(0.,-4.8*m,0.), logicDetector, "physDetector0", logicWorld, false, 0, true);
+	G4VPhysicalVolume * physDetector0 = new G4PVPlacement(0, G4ThreeVector(0., detectorHeight/2.0 - yWorld, 0.), logicDetector, "physDetector0", logicWorld, false, 0, true);
 }
 
 void DetectorConstruction::ConstructMountain(G4NistManager *nist, G4LogicalVolume* logicWorld)
@@ -105,14 +105,14 @@ G4VPhysicalVolume * DetectorConstruction::ConstructAsteroidScene()
 
 G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 {
-	G4NistManager *nist = G4NistManager::Instance();
+	nist = G4NistManager::Instance();
 	G4Material *worldMat = nist->FindOrBuildMaterial("G4_Galactic");
-	G4double xWorld = 20*km;
-	G4double yWorld = 40*km;
-	G4double zWorld = 20*km;
+	xWorld = 20*km;
+	yWorld = 40*km;
+	zWorld = 20*km;
 	G4double world_height = 2 * yWorld;
 	G4Box * solidWorld = new G4Box("solidWorld", xWorld, yWorld, zWorld);
-	G4LogicalVolume * logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
+	logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
 	G4VPhysicalVolume * physWorld = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), logicWorld, "physWorld", 0, false, 0, true);
 
 
@@ -155,7 +155,7 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 	for(G4int layer=0; layer<numOfLayers; layer++)
 	{
 		
-		G4double y = (float) yWorld * (2*zeta*layer - numOfLayers + zeta) / (numOfLayers);
+		G4double y = (float) yWorld * (2*zeta*layer - numOfLayers + zeta) / (numOfLayers) + detectorHeight;
 		//y = yWorld/10. *2*layer - yWorld + yWorld/10. ; 
 		logicAtmosphere[layer] = new G4LogicalVolume(solidAtmosphere, Air[layer], "logicAtmosphere");
 		physAtmosphere[layer] = new G4PVPlacement(0, G4ThreeVector(0., y, 0.), logicAtmosphere[layer], "physAtmosphere", logicWorld, false, layer, true);
@@ -176,7 +176,9 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 G4VPhysicalVolume * DetectorConstruction::Construct()
 {
 	//G4VPhysicalVolume * physWorld = ConstructAsteroidScene();
+	detectorHeight = 1*m;
 	G4VPhysicalVolume * physWorld = ConstructSurfaceScene();
+	ConstructOmniDetector();
 	return physWorld;
 }
 

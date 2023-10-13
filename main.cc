@@ -19,12 +19,18 @@
 #include "action.hh"
 //#include "globals.hh"
 
+//#define ONE_THREADED 1
+
 int main(int argc, char** argv)
 {
-	#ifdef G4MULTITHREADED
-		G4MTRunManager * runManager = new G4MTRunManager();
-	#else
+	#ifdef ONE_THREADED
 		G4RunManager * runManager = new G4RunManager();
+	#else
+		#ifdef G4MULTITHREADED
+			G4MTRunManager * runManager = new G4MTRunManager();
+		#else
+			G4RunManager * runManager = new G4RunManager();
+		#endif
 	#endif
 	//G4RunManager * runManager = new G4RunManager();
 
@@ -41,19 +47,17 @@ int main(int argc, char** argv)
 
 	G4UIExecutive *ui = new G4UIExecutive(argc, argv);
 
-	//G4VisManager *visManager = new G4VisExecutive();
-	//visManager->Initialize();
-
 	G4UImanager *UImanager = G4UImanager::GetUIpointer();
 
-	/*if (argc > 1)
-	{
-		G4String macro_file = argv[1];
-		UImanager -> ApplyCommand("/control/execute " + macro_file);
-		if (argc > 2)
-			filename = argv[2];
-	} else */
-		UImanager -> ApplyCommand("/control/execute run.mac");
+	#ifdef ONE_THREADED
+		G4VisManager *visManager = new G4VisExecutive();
+		visManager->Initialize();
+		UImanager -> ApplyCommand("/control/execute vis.mac");
+	#else
+		#ifdef G4MULTITHREADED
+			UImanager -> ApplyCommand("/control/execute mt_run.mac");
+		#endif
+	#endif
 	ui->SessionStart();
 	return 0;
 }

@@ -25,15 +25,17 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 		void ConstructCOW(G4NistManager *, G4LogicalVolume*);
 		void MyConstruct3Detectors(G4NistManager *, G4LogicalVolume*);
 		void ConstructObstacle(G4NistManager *, G4LogicalVolume*);
-		void ConstructOmniDetector(G4NistManager *, G4LogicalVolume*);
+		void ConstructOmniDetector();
 		void ConstructMountain(G4NistManager *, G4LogicalVolume*);
 		void ConstructAsteriod_Sphere(G4NistManager *, G4LogicalVolume*);
 		void ConstructSimpleAtmosphere(G4NistManager *, G4LogicalVolume*);
 		G4VPhysicalVolume * ConstructAsteroidScene();
 		G4VPhysicalVolume * ConstructSurfaceScene();
-		G4LogicalVolume * logicDetector;
+		G4LogicalVolume *logicWorld, *logicDetector;
 		virtual void ConstructSDandField();
 		//G4Material Air[10];
+		G4double xWorld, yWorld, zWorld, detectorHeight;
+		G4NistManager * nist;
 };
 
 #endif
