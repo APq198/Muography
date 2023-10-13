@@ -116,7 +116,7 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 	G4VPhysicalVolume * physWorld = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), logicWorld, "physWorld", 0, false, 0, true);
 
 
-	const G4int numOfLayers = 10;
+	const G4int numOfLayers = 1;
 
 	G4double density0 = 1.29 * kg/m3;
 	G4double aN = 14.01 *g/mole;
@@ -178,7 +178,7 @@ G4VPhysicalVolume * DetectorConstruction::Construct()
 	//G4VPhysicalVolume * physWorld = ConstructAsteroidScene();
 	detectorHeight = 1*m;
 	G4VPhysicalVolume * physWorld = ConstructSurfaceScene();
-	//ConstructOmniDetector();
+	ConstructOmniDetector();
 	return physWorld;
 }
 
