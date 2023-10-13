@@ -11,6 +11,12 @@ MyEventAction::~MyEventAction()
 void MyEventAction::BeginOfEventAction(const G4Event * event)
 {
 	//fEdep = 0.;
+	/* 
+	 * event 
+	 *		-> GetPrimaryVertex();
+	 * 				-> GetPosition();
+	 * 				   і все?
+	 */
 }
 
 
