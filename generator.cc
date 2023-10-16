@@ -96,7 +96,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 
 	// position: 
 	G4double yWorld = 10*km;
-	G4ThreeVector pos(0,0.98*yWorld*km,0);
+	G4ThreeVector pos(0,0.98*yWorld,0);
 	fParticleGun->SetParticlePosition(pos);
 
 
