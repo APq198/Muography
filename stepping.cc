@@ -18,6 +18,6 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	//	G4cout << "Print many times but no that many (<1000)" << G4endl;
 	//G4cout << cntr << ") ..." << G4endl;
 	cntr ++;
-	G4cout << " ";
+	G4cout << "-";
 }
 
