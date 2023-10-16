@@ -108,7 +108,7 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 	nist = G4NistManager::Instance();
 	G4Material *worldMat = nist->FindOrBuildMaterial("G4_Galactic");
 	xWorld = 20*km;
-	yWorld = 40*km;
+	yWorld = 10*km;
 	zWorld = 20*km;
 	G4double world_height = 2 * yWorld;
 	G4Box * solidWorld = new G4Box("solidWorld", xWorld, yWorld, zWorld);

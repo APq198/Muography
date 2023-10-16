@@ -1,4 +1,4 @@
-###echo "name: $1"
+echo "Deleting files named: G4W_n_$1"
 rm "G4W_0_$1"
 rm "G4W_1_$1"
 rm "G4W_2_$1"

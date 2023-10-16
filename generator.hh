@@ -8,6 +8,7 @@
 #include "Randomize.hh"
 #include "math.h"
 #include "G4GenericMessenger.hh"
+#include "constructor.hh"
 
 
 class PrimaryGenerator : public G4VUserPrimaryGeneratorAction

@@ -20,6 +20,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 		~DetectorConstruction();
 
 		virtual G4VPhysicalVolume* Construct();
+		G4double yWorld;
 	private:
 		void ConstructMountainFuji(G4NistManager *, G4LogicalVolume*);
 		void ConstructCOW(G4NistManager *, G4LogicalVolume*);
@@ -35,7 +36,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 		G4LogicalVolume *logicDetector = nullptr;
 		virtual void ConstructSDandField();
 		//G4Material Air[10];
-		G4double xWorld, yWorld, zWorld, detectorHeight;
+		G4double xWorld, zWorld, detectorHeight;
 		G4NistManager * nist;
 };
 

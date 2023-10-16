@@ -90,12 +90,13 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	//std::cout << "Launching a proton, momentum = " << momentum << std::endl;
 	G4cout << "Launching a proton, momentum = " << momentum << G4endl;
 	G4ParticleTable * particleTable = G4ParticleTable::GetParticleTable();
-	G4String particleName = "proton";
+	G4String particleName = "alpha";
 	G4ParticleDefinition *particle = particleTable->FindParticle(particleName);
 	fParticleGun->SetParticleDefinition(particle);
 
 	// position: 
-	G4ThreeVector pos(0,0.98*40*km,0);
+	G4double yWorld = 10*km;
+	G4ThreeVector pos(0,0.98*yWorld*km,0);
 	fParticleGun->SetParticlePosition(pos);
 
 
