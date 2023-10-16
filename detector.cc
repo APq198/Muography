@@ -75,7 +75,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist
 	G4Track * track = aStep->GetTrack();
 	G4String particleName = track->GetParticleDefinition()->GetParticleName();
 	G4double energy = track->GetTotalEnergy();
-	G4cout 	<< particleName << ", "
+	G4cout 	<<G4endl << particleName << ", "
 			<< energy
 			<< G4endl;
 
