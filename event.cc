@@ -17,11 +17,11 @@ void MyEventAction::BeginOfEventAction(const G4Event * event)
 	 * 				-> GetPosition();
 	 * 				   і все?
 	 */
-	//G4cout << "something01" << G4endl;
+	G4cout << "begin of event; ";
 }
 
 
 void MyEventAction::EndOfEventAction(const G4Event * event)
 {
-	//G4cout << "Energy deposition: " << fEdep << G4endl;
+	G4cout << "end of event; " << G4endl;
 }
