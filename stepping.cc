@@ -14,6 +14,7 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	//fEventAction->AddEdep(edep);
 	//G4cout << "something2_step" << G4endl;
 	static G4int cntr = 0;
-	G4cout << cntr << ") ..." << G4endl;
+	//G4cout << cntr << ") ..." << G4endl;
+	cntr ++;
 }
 
