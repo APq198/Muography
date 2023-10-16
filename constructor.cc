@@ -176,7 +176,7 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 G4VPhysicalVolume * DetectorConstruction::Construct()
 {
 	//G4VPhysicalVolume * physWorld = ConstructAsteroidScene();
-	detectorHeight = 1*m;
+	detectorHeight = 10*m;
 	G4VPhysicalVolume * physWorld = ConstructSurfaceScene();
 	ConstructOmniDetector();
 	return physWorld;

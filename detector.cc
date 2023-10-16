@@ -81,6 +81,7 @@ G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist
 	G4cout 	<<G4endl << particleName << ", "
 			<< energy
 			<< G4endl;
+	track->SetTrackStatus(fStopAndKill);
 
 	return true;
 }
