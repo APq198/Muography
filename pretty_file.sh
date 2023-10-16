@@ -6,5 +6,5 @@ do
   # if value of $var starts with "a", ignore it
   #
   [[ $var =~ ^a.* ]] && continue
-  echo "$var" >> file2.txt
+  echo "$var" >> NEW_$1
 done < "$input"
