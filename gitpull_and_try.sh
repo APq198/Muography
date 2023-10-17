@@ -1,7 +1,7 @@
 #!/bin/bash
 git reset --hard HEAD
 git pull
-cmake ..
+#cmake ..
 make 
 . remove_files.sh output11.txt
 ###rm end_output11.txt
