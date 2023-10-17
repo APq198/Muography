@@ -8,6 +8,7 @@ do
 	##
 	##
 	##
+	echo $i
 	let j=$i-1
 	input="./$prefix$i$suffix"
 	echo $input
