@@ -12,7 +12,7 @@
 
 #include "detector.hh"
 
-#define Y_WORLD_VAL 10*km
+#define Y_WORLD_VAL 40*km
 
 
 class DetectorConstruction : public G4VUserDetectorConstruction
