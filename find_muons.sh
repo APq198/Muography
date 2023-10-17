@@ -7,7 +7,7 @@ do
   # if value of $var starts with "a", ignore it
   #
   ### [[ $var =~ ^a.* ]] && continue
-  if [["$var" =~ ^"mu"]];
+  if [[$var =~ ^"mu"]];
   then
 	((counter++))
   fi
