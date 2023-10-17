@@ -8,6 +8,6 @@ do
 	##
 	##
 	##
-	input="./"+prefix+$i+suffix
+	input="./"+$prefix+$i+$suffix
 	echo $input
 done
