@@ -3,7 +3,7 @@ numOfThreads=4
 prefix="G4W_"
 suffix="_$1"
 filename="end_output11.txt"
-for i in {1..$numOfThreads}
+for i in {1..4}
 do
 	##
 	##
