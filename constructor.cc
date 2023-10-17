@@ -119,6 +119,7 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 
 	const G4int numOfLayers = 10;
 
+	G4double H = 8400*m;
 	G4double density0 = 1.29 * kg/m3;
 	G4double aN = 14.01 *g/mole;
 	G4double aO = 16 *g/mole;
@@ -135,29 +136,27 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 
 	G4Material * Air[numOfLayers];
 
-	for (int layer=0; layer<numOfLayers; layer++)
-	{
-		std::stringstream stri;
-        stri << layer;
-
-		G4double deltaH = 40e3 / (1.0*numOfLayers) * layer;
-		//G4double density = density0 * pow( ( 1 - (gamma-1)/gamma * M * g0 * deltaH / (R*T)  ), (1 / (gamma - 1) ) );
-		G4double density = density0 * pow(e, (-1)*(M_air*g0)/(R*T));
-		Air[layer] = new G4Material("G4_AIR_" + stri.str(), density, 2 );
-		Air[layer]->AddElement(elN, 70*perCent);
-		Air[layer]->AddElement(elO, 30*perCent);
-	}
-
 	G4double zeta = 0.8;
 	G4Box * solidAtmosphere = new G4Box("soliAir", xWorld, zeta*yWorld/numOfLayers, zWorld);
 	G4LogicalVolume * logicAtmosphere[numOfLayers];
 	G4VPhysicalVolume * physAtmosphere[numOfLayers];
 
-	for(G4int layer=0; layer<numOfLayers; layer++)
+	for (int layer=0; layer<numOfLayers; layer++)
 	{
-		
 		G4double y = (float) yWorld * (2*zeta*layer - numOfLayers + zeta) / (numOfLayers) + detectorHeight;
 		//y = yWorld/10. *2*layer - yWorld + yWorld/10. ; 
+
+		std::stringstream stri;
+        stri << layer;
+
+		//G4double deltaH = 40e3 / (1.0*numOfLayers) * layer;
+		//G4double density = density0 * pow( ( 1 - (gamma-1)/gamma * M * g0 * deltaH / (R*T)  ), (1 / (gamma - 1) ) );
+		//G4double density = density0 * pow(e, (-1)*(M_air*g0)/(R*T));	// my
+		G4double density = density0 * pow(e,  (-1.0) * y / H  );		// from paper (thesis)
+		Air[layer] = new G4Material("G4_AIR_" + stri.str(), density, 2 );
+		Air[layer]->AddElement(elN, 70*perCent);
+		Air[layer]->AddElement(elO, 30*perCent);
+
 		logicAtmosphere[layer] = new G4LogicalVolume(solidAtmosphere, Air[layer], "logicAtmosphere");
 		physAtmosphere[layer] = new G4PVPlacement(0, G4ThreeVector(0., y, 0.), logicAtmosphere[layer], "physAtmosphere", logicWorld, false, layer, true);
 	}
