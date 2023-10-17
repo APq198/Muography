@@ -10,6 +10,11 @@ do
 	##
 	##
 	input="./$prefix$i$suffix"
-	echo $input
+	while IFS= read -r var
+		do
+		# if value of $var starts with "a", ignore it
+		[[ $var =~ ^a.* ]] && continue
+		echo "$var" >> "$filename"
+		done < "$input"
 	((i++))
 done
