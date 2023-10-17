@@ -12,6 +12,8 @@
 
 #include "detector.hh"
 
+#define Y_WORLD_VAL 1*km
+
 
 class DetectorConstruction : public G4VUserDetectorConstruction
 {
