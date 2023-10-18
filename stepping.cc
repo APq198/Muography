@@ -20,6 +20,7 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	cntr ++;
 	//G4cout << "a";
 	//std::cout << std::flush;
-	G4cout << "a";
+	//G4cout << "a";
+	std::cout << "a";
 }
 
