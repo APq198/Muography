@@ -3,6 +3,6 @@
 ###/control/cout/useBuffer flag1
 /control/cout/setCoutFile output11.txt true
 ###/control/cout/setCoutFile fileName ifAppend		### https://twiki.cern.ch/twiki/bin/view/Geant4/QuickMigrationGuideForGeant4V10#The_basics_per_thread_vs_shared
-/generator/setParticleMomentum 1000000
-/run/beamOn 12
+/generator/setParticleMomentum 100000
+/run/beamOn 4
 exit

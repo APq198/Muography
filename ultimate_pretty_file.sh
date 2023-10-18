@@ -13,7 +13,7 @@ do
 	while IFS= read -r var
 		do
 		# if value of $var starts with "a", ignore it
-		[[ $var =~ ^a.* ]] && continue
+		[[ $var =~ ^u.* ]] && continue
 		echo "$var" >> "$filename"
 		done < "$input"
 	((i++))
