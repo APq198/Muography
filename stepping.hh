@@ -7,6 +7,8 @@
 #include "constructor.hh"
 #include "event.hh"
 
+#include "globals.hh"
+
 class MySteppingAction : public G4UserSteppingAction
 {
 	public: 

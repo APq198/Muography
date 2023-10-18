@@ -4,3 +4,11 @@
 /vis/viewer/set/autoRefresh true
 /vis/scene/add/trajectories smooth
 /vis/scene/endOfEventAction accumulate
+
+## /vis/filtering/trajectories/create/particleFilter
+## /vis/filtering/trajectories/particleFilter-0/add gamma   	## white list
+## /vis/filtering/trajectories/particleFilter-0/invert true		## black list
+
+## /vis/modeling/trajectories/create/drawByParticleID
+## /vis/modeling/trajectories/drawByParticleID-0/set e- blue
+## red, blue, cyan, yellow, green, magenta

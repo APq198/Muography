@@ -1,6 +1,7 @@
 #include "constructor.hh"
 #include "CADMesh.hh"		// Easy 3d models --- https://github.com/christopherpoole/CADMesh
 
+
 DetectorConstruction::DetectorConstruction()
 {}
 
@@ -54,7 +55,11 @@ void DetectorConstruction::ConstructOmniDetector()
 {
 	G4Box * solidDetector = new G4Box("solidDetector", xWorld, detectorHeight/2.0, zWorld);
 	logicDetector = new G4LogicalVolume(solidDetector, nist->FindOrBuildMaterial("G4_WATER"), "logicDetector");
-	G4VPhysicalVolume * physDetector0 = new G4PVPlacement(0, G4ThreeVector(0., detectorHeight/2.0 - yWorld, 0.), logicDetector, "physDetector0", logicWorld, false, 0, true);
+	#ifndef USE_STANDARD_ATMOSPHERE
+		G4VPhysicalVolume * physDetector0 = new G4PVPlacement(0, G4ThreeVector(0., detectorHeight/2.0 - yWorld, 0.), logicDetector, "physDetector0", logicWorld, false, 0, true);
+	#else
+		G4VPhysicalVolume * physDetector0 = new G4PVPlacement(0, G4ThreeVector(0., -detectorHeight/2.0 -yWorld, 0.), logicDetector, "physDetector0", logicWorld, false, 0, true);
+	#endif
 }
 
 void DetectorConstruction::ConstructMountain(G4NistManager *nist, G4LogicalVolume* logicWorld)
@@ -107,59 +112,146 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 {
 	nist = G4NistManager::Instance();
 	G4Material *worldMat = nist->FindOrBuildMaterial("G4_Galactic");
-	xWorld = 20*km;
-	//yWorld = 1*km;
+
 	yWorld = Y_WORLD_VAL;
-	zWorld = 20*km;
-	G4double world_height = 2 * yWorld;
-	G4Box * solidWorld = new G4Box("solidWorld", xWorld, yWorld, zWorld);
-	logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
-	G4VPhysicalVolume * physWorld = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), logicWorld, "physWorld", 0, false, 0, true);
+	G4double xWorld = 20*km;
+	G4double zWorld = 20*km;
 
+	#ifdef USE_STANDARD_ATMOSPHERE
+		G4int altitude_stand[] = {
+			0,
+			1000,
+			2000,
+			3000,
+			4000,
+			5000,
+			6000,
+			7000,
+			8000,
+			9000,
+			10000,
+			15000,
+			20000,
+			25000,
+			30000,
+			40000,
+			50000,
+			60000,
+			70000,
+			80000
+		};
+		G4double density_stand[] = {
+			1.225,
+			1.112,
+			1.007,
+			0.9093,
+			0.8194,
+			0.7364,
+			0.6601,
+			0.5900,
+			0.5258,
+			0.4671,
+			0.4135,
+			0.1948,
+			0.08891,
+			0.04008,
+			0.01841,
+			0.003996,
+			0.001027,
+			0.0003097,
+			0.00008283,
+			0.00001846
+		};
+		
+		
 
-	const G4int numOfLayers = 10;
+		G4Box * solidWorld = new G4Box("solidWorld", xWorld, yWorld+detectorHeight, zWorld);
+		logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
+		physWorld = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), logicWorld, "physWorld", 0, false, 0, true);
+		
+		G4Box * solidLayer[15];
+		G4LogicalVolume * logicLayer[15];
+		G4VPhysicalVolume * physLayer[15];
+		G4Material * Air[15];
 
-	G4double H = 8400*m;
-	G4double density0 = 1.29 * kg/m3;
-	G4double aN = 14.01 *g/mole;
-	G4double aO = 16 *g/mole;
-	G4Element * elN = new G4Element("Nitrogen", "N", 7, aN);
-	G4Element * elO = new G4Element("Oxygen", "O", 8, aO);
-	G4double degOfFreedom = 3;
-	G4double R = 8.3144626181532;
-	G4double gamma = (degOfFreedom + 2) / degOfFreedom;
-	G4double T = 293.15;
-	G4double M = (0.3*aO + 0.7*aN) / 1000.0;
-	G4double g0 = 9.8;
-	G4double e = 2.718281828459045;
-	G4double M_air = 29 / 1000;
+		G4double aN = 14.01 *g/mole;
+		G4double aO = 16 *g/mole;
+		G4Element * elN = new G4Element("Nitrogen", "N", 7, aN);
+		G4Element * elO = new G4Element("Oxygen", "O", 8, aO);
 
-	G4Material * Air[numOfLayers];
+		for (G4int i=0; i < 15; i++)	// 15 - lower than 40 km (see table)
+		{
+			G4double deltaY = altitude_stand[i+1]*m - altitude_stand[i]*m ;
+			G4double y = (altitude_stand[i+1]*m + altitude_stand[i]*m) / 2.0 ;
 
-	G4double zeta = 0.8;
-	G4Box * solidAtmosphere = new G4Box("soliAir", xWorld, zeta*yWorld/numOfLayers, zWorld);
-	G4LogicalVolume * logicAtmosphere[numOfLayers];
-	G4VPhysicalVolume * physAtmosphere[numOfLayers];
+			std::stringstream stri;
+			stri << i;
+			G4double density = density_stand[i] * kg/m3;
+			Air[i] = new G4Material("G4_AIR_" + stri.str(), density, 2 );
+			Air[i]->AddElement(elN, 70*perCent);
+			Air[i]->AddElement(elO, 30*perCent);
+			
+			solidLayer[i] = new G4Box("solidLayer", xWorld, deltaY/2.0 , zWorld);
+			logicLayer[i] = new G4LogicalVolume(solidLayer[i], Air[i], "logicLayer");
+			physLayer[i] = new G4PVPlacement(0, G4ThreeVector(0., y-yWorld, 0.), logicLayer[i], "physLayer", logicWorld, false, i, true);
+		}
+	//} else {
+	#else
+		//xWorld = 20*km;
+		//yWorld = 1*km;
+		//yWorld = Y_WORLD_VAL;
+		//zWorld = 20*km;
+		G4double world_height = 2 * yWorld;
+		G4Box * solidWorld = new G4Box("solidWorld", xWorld, yWorld, zWorld);
+		logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
+		physWorld = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), logicWorld, "physWorld", 0, false, 0, true);
+		
+		
+		const G4int numOfLayers = 10;
 
-	for (int layer=0; layer<numOfLayers; layer++)
-	{
-		G4double y = (float) yWorld * (2*zeta*layer - numOfLayers + zeta) / (numOfLayers) + detectorHeight;
-		//y = yWorld/10. *2*layer - yWorld + yWorld/10. ; 
+		G4double H = 8400*m;
+		G4double density0 = 1.29 * kg/m3;
+		G4double aN = 14.01 *g/mole;
+		G4double aO = 16 *g/mole;
+		G4Element * elN = new G4Element("Nitrogen", "N", 7, aN);
+		G4Element * elO = new G4Element("Oxygen", "O", 8, aO);
+		G4double degOfFreedom = 3;
+		G4double R = 8.3144626181532;
+		G4double gamma = (degOfFreedom + 2) / degOfFreedom;
+		G4double T = 293.15;
+		G4double M = (0.3*aO + 0.7*aN) / 1000.0;
+		G4double g0 = 9.8;
+		G4double e = 2.718281828459045;
+		G4double M_air = 29 / 1000;
 
-		std::stringstream stri;
-        stri << layer;
+		G4Material * Air[numOfLayers];
 
-		//G4double deltaH = 40e3 / (1.0*numOfLayers) * layer;
-		//G4double density = density0 * pow( ( 1 - (gamma-1)/gamma * M * g0 * deltaH / (R*T)  ), (1 / (gamma - 1) ) );
-		//G4double density = density0 * pow(e, (-1)*(M_air*g0)/(R*T));	// my
-		G4double density = density0 * pow(e,  (-1.0) * y / H  );		// from paper (thesis)
-		Air[layer] = new G4Material("G4_AIR_" + stri.str(), density, 2 );
-		Air[layer]->AddElement(elN, 70*perCent);
-		Air[layer]->AddElement(elO, 30*perCent);
+		G4double zeta = 0.8;
+		G4Box * solidAtmosphere = new G4Box("soliAir", xWorld, zeta*yWorld/numOfLayers, zWorld);
+		G4LogicalVolume * logicAtmosphere[numOfLayers];
+		G4VPhysicalVolume * physAtmosphere[numOfLayers];
 
-		logicAtmosphere[layer] = new G4LogicalVolume(solidAtmosphere, Air[layer], "logicAtmosphere");
-		physAtmosphere[layer] = new G4PVPlacement(0, G4ThreeVector(0., y, 0.), logicAtmosphere[layer], "physAtmosphere", logicWorld, false, layer, true);
-	}
+		for (int layer=0; layer<numOfLayers; layer++)
+		{
+			G4double y = (float) yWorld * (2*zeta*layer - numOfLayers + zeta) / (numOfLayers) + detectorHeight;
+			//y = yWorld/10. *2*layer - yWorld + yWorld/10. ; 
+
+			std::stringstream stri;
+			stri << layer;
+
+			//G4double deltaH = 40e3 / (1.0*numOfLayers) * layer;
+			//G4double density = density0 * pow( ( 1 - (gamma-1)/gamma * M * g0 * deltaH / (R*T)  ), (1 / (gamma - 1) ) );
+			//G4double density = density0 * pow(e, (-1)*(M_air*g0)/(R*T));	// my
+			G4double density = density0 * pow(e,  (-1.0) * y / H  );		// from paper (thesis)
+			Air[layer] = new G4Material("G4_AIR_" + stri.str(), density, 2 );
+			Air[layer]->AddElement(elN, 70*perCent);
+			Air[layer]->AddElement(elO, 30*perCent);
+
+			logicAtmosphere[layer] = new G4LogicalVolume(solidAtmosphere, Air[layer], "logicAtmosphere");
+			physAtmosphere[layer] = new G4PVPlacement(0, G4ThreeVector(0., y, 0.), logicAtmosphere[layer], "physAtmosphere", logicWorld, false, layer, true);
+		}
+	#endif
+	//}
 
 
 	/*G4Material *atmosphereMaterial = nist->FindOrBuildMaterial("G4_AIR");
@@ -171,6 +263,7 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 
 	return physWorld;
 }
+
 
 
 G4VPhysicalVolume * DetectorConstruction::Construct()

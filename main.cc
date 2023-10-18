@@ -17,9 +17,8 @@
 #include "constructor.hh"
 #include "physics.hh"
 #include "action.hh"
-//#include "globals.hh"
+#include "globals.hh"
 
-//#define ONE_THREADED 1
 
 int main(int argc, char** argv)
 {
@@ -39,7 +38,7 @@ int main(int argc, char** argv)
 	runManager->SetUserInitialization(new ActionInitialization());
 
 	G4VModularPhysicsList* physics = new QGSP_BERT();
-    //physics->RegisterPhysics(new G4DecayPhysics());
+    //physics->RegisterPhysics(new G4DecayPhysics());		//
     runManager->SetUserInitialization(physics);
 
 	//runManager->Initialize(); // /run/initialize instead

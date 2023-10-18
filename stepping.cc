@@ -18,9 +18,11 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	//	G4cout << "Print many times but no that many (<1000)" << G4endl;
 	//G4cout << cntr << ") ..." << G4endl;
 	cntr ++;
-	//G4cout << "a";
-	//std::cout << std::flush;
-	G4cout << "u";
-	//std::cout << "a";
+	#ifndef ONE_THREADED
+		//G4cout << "a";
+		//std::cout << std::flush;
+		G4cout << "u";
+		//std::cout << "a";
+	#endif
 }
 

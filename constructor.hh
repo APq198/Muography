@@ -12,7 +12,14 @@
 
 #include "detector.hh"
 
-#define Y_WORLD_VAL 40*km
+
+#define USE_STANDARD_ATMOSPHERE 1
+
+#ifndef USE_STANDARD_ATMOSPHERE
+	#define Y_WORLD_VAL 40*km		// for usual (not standard atmosphere)
+#else
+	#define Y_WORLD_VAL 40*km		// for standard atmosphere 
+#endif
 
 
 class DetectorConstruction : public G4VUserDetectorConstruction
@@ -35,6 +42,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 		G4VPhysicalVolume * ConstructAsteroidScene();
 		G4VPhysicalVolume * ConstructSurfaceScene();
 		G4LogicalVolume *logicWorld;
+		G4VPhysicalVolume * physWorld;
 		G4LogicalVolume *logicDetector = nullptr;
 		virtual void ConstructSDandField();
 		//G4Material Air[10];

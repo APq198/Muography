@@ -1,8 +1,6 @@
 #ifndef MY_GLOBALS_HH
 #define MY_GLOBALS_HH
 
-#include <string>
-
-std::string filename = "";
+//#define ONE_THREADED 1
 
 #endif
