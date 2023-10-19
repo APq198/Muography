@@ -22,9 +22,11 @@ PrimaryGenerator::PrimaryGenerator()
 	fMessenger = new G4GenericMessenger(this, "/generator/", "Particle generator");
 	fMessenger->DeclareProperty("setParticleMomentum", momentum, "Change momentum of the particle");
 	fMessenger->DeclareProperty("setParticleEnergy", energy, "Change momentum of the particle");
+	fMessenger->DeclareProperty("setParticleName", particleName, "Change name of the primary particle");
 
 	momentum = 1*GeV;
 	energy = 1*GeV;
+	particleName = "proton";
 
 	fParticleGun = new G4ParticleGun(1);
 }
@@ -90,7 +92,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	//std::cout << "Launching a proton, momentum = " << momentum << std::endl;
 	G4cout << "Launching a proton, momentum = " << momentum << G4endl;
 	G4ParticleTable * particleTable = G4ParticleTable::GetParticleTable();
-	G4String particleName = "alpha";
+	//G4String particleName = "proton";
 	G4ParticleDefinition *particle = particleTable->FindParticle(particleName);
 	fParticleGun->SetParticleDefinition(particle);
 

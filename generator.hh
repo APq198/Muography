@@ -29,6 +29,7 @@ class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
 
 		G4double momentum;
 		G4double energy;
+		G4String particleName;
 };
 
 #endif
