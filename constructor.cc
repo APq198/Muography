@@ -58,7 +58,7 @@ void DetectorConstruction::ConstructOmniDetector()
 	#ifndef USE_STANDARD_ATMOSPHERE
 		G4VPhysicalVolume * physDetector0 = new G4PVPlacement(0, G4ThreeVector(0., detectorHeight/2.0 - yWorld, 0.), logicDetector, "physDetector0", logicWorld, false, 0, true);
 	#else
-		G4VPhysicalVolume * physDetector0 = new G4PVPlacement(0, G4ThreeVector(0., -detectorHeight -yWorld, 0.), logicDetector, "physDetector0", logicWorld, false, 32, true);
+		G4VPhysicalVolume * physDetector0 = new G4PVPlacement(0, G4ThreeVector(0., -detectorHeight/2.0 -yWorld, 0.), logicDetector, "physDetector0", logicWorld, false, 0, true);
 	#endif
 }
 
@@ -165,7 +165,7 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 		
 		
 
-		G4Box * solidWorld = new G4Box("solidWorld", xWorld, yWorld+4*detectorHeight, zWorld);
+		G4Box * solidWorld = new G4Box("solidWorld", xWorld, yWorld+detectorHeight, zWorld);
 		logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld");
 		physWorld = new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), logicWorld, "physWorld", 0, false, 0, true);
 		
