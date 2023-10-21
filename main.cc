@@ -6,9 +6,9 @@
 #include "G4UIExecutive.hh"
 #include "G4VisExecutive.hh"
 #include "G4VPhysicalVolume.hh"
-#include "QGSP_BERT.hh"
+//#include "QGSP_BERT.hh"
 //#include "QGSP_BIC.hh"
-//#include "FTFP_BERT.hh"
+#include "FTFP_BERT_HP.hh"
 //#include "QGSP_BERT_HP.hh"
 
 #include "G4MTRunManager.hh"
@@ -37,7 +37,7 @@ int main(int argc, char** argv)
 	runManager->SetUserInitialization(new PhysicsList());
 	runManager->SetUserInitialization(new ActionInitialization());
 
-	G4VModularPhysicsList* physics = new QGSP_BERT();
+	G4VModularPhysicsList* physics = new FTFP_BERT_HP();
     //physics->RegisterPhysics(new G4DecayPhysics());		//
     runManager->SetUserInitialization(physics);
 

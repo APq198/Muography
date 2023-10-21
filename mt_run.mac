@@ -5,5 +5,5 @@
 ###/control/cout/setCoutFile fileName ifAppend		### https://twiki.cern.ch/twiki/bin/view/Geant4/QuickMigrationGuideForGeant4V10#The_basics_per_thread_vs_shared
 /generator/setParticleName proton
 /generator/setParticleMomentum 100000				### 100.000 -> 100 GeV 
-/run/beamOn 4
+/run/beamOn 48
 exit
