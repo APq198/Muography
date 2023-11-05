@@ -3,6 +3,6 @@
 
 //#define ONE_THREADED 1
 //#define DONT_LAUNCH 1
-#define SEARCHING_FOR_WINDOW 1
+//#define SEARCHING_FOR_WINDOW 1
 
 #endif

@@ -29,7 +29,7 @@ PrimaryGenerator::PrimaryGenerator()
 	momentum = 1*GeV;
 	energy = 1*GeV;
 	particleName = "proton";
-	useDistribution = 0;
+	useDistribution = 1;
 	launchVertically = 1;
 
 	fParticleGun = new G4ParticleGun(1);
