@@ -6,7 +6,7 @@
 #include "G4RunManager.hh"
 #include <fstream>
 
-//#include "globals.hh"
+#include "globals.hh"
 
 class SensitiveDetector : public G4VSensitiveDetector
 {

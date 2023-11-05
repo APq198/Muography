@@ -6,6 +6,7 @@
 
 #include "G4UserRunAction.hh"
 #include "run.hh"
+#include "globals.hh"
 
 class MyEventAction : public G4UserEventAction
 {
@@ -15,6 +16,7 @@ class MyEventAction : public G4UserEventAction
 
 		virtual void BeginOfEventAction(const G4Event*);
 		virtual void EndOfEventAction(const G4Event*);
+		G4int numIncidentMuons = 0;
 
 };
 

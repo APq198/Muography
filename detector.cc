@@ -56,13 +56,14 @@ G4bool SensitiveDetector::ProcessHits_Old(G4Step *aStep, G4TouchableHistory * RO
 	 * 				-> GetKineticEnergy()
 	 * 				-> GetTotalEnergy()
 	 * 				-> SetTrackStatus(fStopAndKill)  			--- detector absorbs this(?) particle
+	 * 				-> GetPosition()
 	 * 		 -> GetPreStepPoint()
 	 * 				-> GetLocalTime()							
 	 * 				-> GetGlobalTime()							--- seems to work (identical?)
 	 * 				-> GetPosition()							--- particle's position
 	 * 				-> GetTouchable()							--- detector
 	 * 					-> GetTranslation 						--- detector's position
-	*/
+	 */
 	// go to my_proj for interesting things
 
 
@@ -73,15 +74,19 @@ G4bool SensitiveDetector::ProcessHits_Old(G4Step *aStep, G4TouchableHistory * RO
 G4bool SensitiveDetector::ProcessHits(G4Step *aStep, G4TouchableHistory * ROhist)
 {
 	G4Track * track = aStep->GetTrack();
-	G4String particleName = track->GetParticleDefinition()->GetParticleName();
-	//if(particleName[0]=="n" && particleName[1]=="u")
-	//if (particleName.compare(0, 2, "nu") || particleName.compare(0, 7, "anti_nu"))
-	//	return true;
-	G4double energy = track->GetTotalEnergy();
-	G4cout 	<<G4endl << particleName << ", "
-			<< energy
-			<< G4endl;
-	track->SetTrackStatus(fStopAndKill);
+	#ifdef SEARCHING_FOR_WINDOW
+		// its just to block G4cout
+	#else
+		G4String particleName = track->GetParticleDefinition()->GetParticleName();
+		//if(particleName[0]=="n" && particleName[1]=="u")
+		//if (particleName.compare(0, 2, "nu") || particleName.compare(0, 7, "anti_nu"))
+		//	return true;
+		G4double energy = track->GetTotalEnergy();
+		G4cout 	<<G4endl << particleName << ", "
+				<< energy
+				<< G4endl;
+		track->SetTrackStatus(fStopAndKill);
+	#endif
 
 	return true;
 }

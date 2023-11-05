@@ -1,0 +1,5 @@
+/run/numberOfThreads 4
+/run/initialize
+/control/cout/setCoutFile output_search15.txt true
+/generator/setParticleName proton
+## /generator/setParticleMomentum 100000				### 100.000 -> 100 GeV 

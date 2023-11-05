@@ -20,13 +20,17 @@
 PrimaryGenerator::PrimaryGenerator()
 {
 	fMessenger = new G4GenericMessenger(this, "/generator/", "Particle generator");
-	fMessenger->DeclareProperty("setParticleMomentum", momentum, "Change momentum of the particle");
+	//fMessenger->DeclareProperty("setParticleMomentum", momentum, "Change momentum of the particle (doesn't work, use energy)");
 	fMessenger->DeclareProperty("setParticleEnergy", energy, "Change momentum of the particle");
 	fMessenger->DeclareProperty("setParticleName", particleName, "Change name of the primary particle");
+	fMessenger->DeclareProperty("useDistribution", useDistribution, "Whether to use distribution based on PCR fluxes (1-use, 0-use specified momentum)");
+	fMessenger->DeclareProperty("launchVertically", launchVertically, "Whether to launch PCRs vertically (only [0,-1,0])");
 
 	momentum = 1*GeV;
 	energy = 1*GeV;
 	particleName = "proton";
+	useDistribution = 0;
+	launchVertically = 1;
 
 	fParticleGun = new G4ParticleGun(1);
 }
@@ -36,14 +40,40 @@ PrimaryGenerator::~PrimaryGenerator()
 	delete fParticleGun;
 }
 
-void PrimaryGenerator::GenerateMuonFlux()
+G4double PrimaryGenerator::my_lerp(G4double x1, G4double x2, G4double y1, G4double y2, G4double x)
+{	return y1 + (x-x1)*(y2-y1)/(x2-x1);		}
+
+G4double PrimaryGenerator::phi_interpolated(G4double lgE)
 {
-	
+	G4int l = 29;
+	for(int i=0; i<l-1; i++){
+		if ( lgE < 8.451046876324488 )
+			return 0.0;
+		if ( log10(energies0[i])<=lgE && lgE<log10(energies0[i+1]) ) {
+			return my_lerp(log10(energies0[i]), log10(energies0[i+1]), log10(fluxes0[i]), log10(fluxes0[i+1]), lgE);
+		}
+	}
+	return 0.0;
 }
+
+G4double PrimaryGenerator::Psi(G4double E) { return pow(10, b) * pow(E, k) / NC_Psi; }
+
+G4double PrimaryGenerator::inverse_CDF(G4double y) {	return pow((y * (pow(E_max, (k+1)) - pow(E_min, (k+1))) + pow(E_min, (k+1))),  (1/(k+1)));	}
+
+G4double PrimaryGenerator::generate_accurate_E()
+{
+	while(1)
+	{
+		G4double X3 = inverse_CDF(G4UniformRand());
+		if(G4UniformRand() < pow(10, phi_interpolated(log10(X3))) / (NC_Psi*Psi(X3)))
+			return X3;
+	}
+}
+
+void PrimaryGenerator::GenerateMuonFlux() {}
 
 void PrimaryGenerator::GeneratePrimaries(G4Event * anEvent)
 {
-	//MyGeneratePrimaries_CosmicRays_Asteroid(anEvent);
 	MyGeneratePrimaries_CosmicRays_Surface(anEvent);
 }
 
@@ -89,38 +119,43 @@ void PrimaryGenerator::MyGeneratePrimaries_Muons(G4Event * anEvent)
 void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 {
 	// defining particle
-	//std::cout << "Launching a proton, momentum = " << momentum << std::endl;
-	G4cout << "Launching a proton, momentum = " << momentum << G4endl;
 	G4ParticleTable * particleTable = G4ParticleTable::GetParticleTable();
-	//G4String particleName = "proton";
 	G4ParticleDefinition *particle = particleTable->FindParticle(particleName);
 	fParticleGun->SetParticleDefinition(particle);
 
 	// position: 
-	//G4double yWorld = 10*km;
 	G4double yWorld = Y_WORLD_VAL;
 	G4ThreeVector pos(0,0.99*yWorld,0);
 	fParticleGun->SetParticlePosition(pos);
 
-
 	// direction
-	// make it random
-	//G4ThreeVector direction = G4ThreeVector(0, -1, 0).unit();
-	//fParticleGun->SetParticleMomentumDirection(direction);
-	G4double theta_max = PI/2/10;
-	G4double theta = G4UniformRand()*theta_max;		// angle between momentum and OY axis
-	G4double phi = G4UniformRand()*2*PI;
-	G4ThreeVector direction = G4ThreeVector(  sin(theta)*cos(phi),  -1*cos(theta),  sin(theta)*sin(phi)  ).unit();
-	fParticleGun->SetParticleMomentumDirection(direction);
+	if (launchVertically) {
+		G4ThreeVector direction = G4ThreeVector( 0, -1, 0 ).unit();
+		fParticleGun->SetParticleMomentumDirection(direction);
+	} else {
+		// random
+		G4double theta_max = PI/2/10;
+		G4double theta = G4UniformRand()*theta_max;		// angle between momentum and OY axis
+		G4double phi = G4UniformRand()*2*PI;
+		G4ThreeVector direction = G4ThreeVector(  sin(theta)*cos(phi),  -1*cos(theta),  sin(theta)*sin(phi)  ).unit();
+		fParticleGun->SetParticleMomentumDirection(direction);
+	}
 	
 
 	// energy
-	//G4double momentum = 1*TeV;
-	fParticleGun->SetParticleMomentum(momentum);
-
-
-
-	fParticleGun->GeneratePrimaryVertex(anEvent);
+	if (useDistribution) {
+		G4double E = generate_accurate_E() * eV;
+		fParticleGun->SetParticleEnergy(E);
+		G4cout << "Launching a " << particleName << " with distributed energy, energy = " << E << G4endl;
+	} else {
+		//fParticleGun->SetParticleMomentum(momentum);
+		//G4cout << "Launching a " << particleName << ", momentum = " << momentum << G4endl;
+		fParticleGun->SetParticleEnergy(energy);
+		G4cout << "Launching a " << particleName << " with predefined(!) energy, energy = " << energy << G4endl;
+	}
+	#ifndef DONT_LAUNCH
+		fParticleGun->GeneratePrimaryVertex(anEvent);
+	#endif
 }
 
 void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Asteroid(G4Event * anEvent)
