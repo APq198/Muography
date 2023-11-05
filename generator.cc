@@ -146,12 +146,12 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	if (useDistribution) {
 		G4double E = generate_accurate_E() * eV;
 		fParticleGun->SetParticleEnergy(E);
-		G4cout << "Launching a " << particleName << " with distributed energy, energy = " << E << G4endl;
+		G4cout << G4endl << "Launching a " << particleName << " with distributed energy, energy = " << E << G4endl;
 	} else {
 		//fParticleGun->SetParticleMomentum(momentum);
 		//G4cout << "Launching a " << particleName << ", momentum = " << momentum << G4endl;
 		fParticleGun->SetParticleEnergy(energy);
-		G4cout << "Launching a " << particleName << " with predefined(!) energy, energy = " << energy << G4endl;
+		G4cout << G4endl << "Launching a " << particleName << " with predefined(!) energy, energy = " << energy << G4endl;
 	}
 	#ifndef DONT_LAUNCH
 		fParticleGun->GeneratePrimaryVertex(anEvent);
