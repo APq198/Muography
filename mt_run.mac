@@ -1,9 +1,9 @@
 /run/numberOfThreads 4
 /run/initialize
-###/control/cout/useBuffer flag1
 /control/cout/setCoutFile output16.txt true
-###/control/cout/setCoutFile fileName ifAppend		### https://twiki.cern.ch/twiki/bin/view/Geant4/QuickMigrationGuideForGeant4V10#The_basics_per_thread_vs_shared
-/generator/setParticleName proton
+### /control/cout/useBuffer flag1
+### /control/cout/setCoutFile fileName ifAppend		### https://twiki.cern.ch/twiki/bin/view/Geant4/QuickMigrationGuideForGeant4V10#The_basics_per_thread_vs_shared
 ### /generator/setParticleMomentum 100000				### 100.000 -> 100 GeV 
-/run/beamOn 4
+/generator/setParticleName proton
+/run/beamOn 800
 exit

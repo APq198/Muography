@@ -5,4 +5,5 @@
 *.png
 *.jpg
 *.csv
+*.txt
 PCR_Fluxes_datapoints*.csv

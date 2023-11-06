@@ -2,7 +2,7 @@
 numOfThreads=4
 prefix="G4W_"
 suffix="_$1"
-filename="end_output11.txt"
+filename="end_$1"
 i=0
 while [ $i -lt $numOfThreads ]	
 do
