@@ -104,7 +104,8 @@ class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
 		};
 		G4double phi_interpolated(G4double E);
 		G4double my_lerp(G4double x1, G4double x2, G4double y1, G4double y2, G4double x);
-		G4double E_min = 20e9;//pow(10, 10);
+		G4double E_min_mes, E_max_mes;
+		G4double E_min = 100e9;//pow(10, 10);
 		G4double E_max = pow(10, 14);
 		G4double k = -2.6;	// from PCR_Fluxes.ipynb - manually
 		G4double b = 27.7;

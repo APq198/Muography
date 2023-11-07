@@ -25,12 +25,16 @@ PrimaryGenerator::PrimaryGenerator()
 	fMessenger->DeclareProperty("setParticleName", particleName, "Change name of the primary particle");
 	fMessenger->DeclareProperty("useDistribution", useDistribution, "Whether to use distribution based on PCR fluxes (1-use, 0-use specified momentum)");
 	fMessenger->DeclareProperty("launchVertically", launchVertically, "Whether to launch PCRs vertically (only [0,-1,0])");
+	//fMessenger->DeclareProperty("setMinEnergyForDistribution", E_min_mes, "Change E_min for distributing PCR");
+	//fMessenger->DeclareProperty("setMaxEnergyForDistribution", E_max_mes, "Change E_max for distributing PCR");
 
 	momentum = 1*GeV;
 	energy = 1*GeV;
 	particleName = "proton";
 	useDistribution = 1;
 	launchVertically = 1;
+	//E_min_mes = E_min;
+	//E_max_mes = E_max;
 
 	fParticleGun = new G4ParticleGun(1);
 }
