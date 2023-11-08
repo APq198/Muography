@@ -20,8 +20,9 @@ void MyEventAction::BeginOfEventAction(const G4Event * event)
 	 */
 	// G4cout << "begin of event; " << G4endl;
 	numIncidentMuons = 0;
-	for (int i =0; i<10000; i++)
+	for (int i =0; i<1000; i++)
 		G4cout << "u";
+	G4cout << G4endl;
 }
 
 
