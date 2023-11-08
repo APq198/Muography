@@ -21,7 +21,7 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	#ifndef ONE_THREADED
 		//G4cout << "a";
 		//std::cout << std::flush;
-		G4cout << " ";
+		G4cout << "";
 		//std::cout << "a";
 	#endif
 
