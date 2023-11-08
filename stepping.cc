@@ -17,7 +17,7 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	if (cntr<100000000)
 	{
 		cntr += 1;
-		G4cout << "u";
+		// G4cout << "u";
 	}
 	//if (cntr < 1000)
 	//	G4cout << "Print many times but no that many (<1000)" << G4endl;

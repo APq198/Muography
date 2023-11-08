@@ -18,14 +18,15 @@ void MyEventAction::BeginOfEventAction(const G4Event * event)
 	 * 				-> GetPosition();
 	 * 				   і все?
 	 */
-	G4cout << "begin of event; " << G4endl;
+	G4cout << "begin of event; "; // << G4endl;
 	numIncidentMuons = 0;
 }
 
 
 void MyEventAction::EndOfEventAction(const G4Event * event)
 {
-	G4cout << G4endl << "end of event; " << G4endl;
+	// !! G4cout << G4endl << "end of event; " << G4endl;
+	G4cout << "end of event; "; // !! << G4endl;
 	#ifdef SEARCHING_FOR_WINDOW
 		G4cout << G4endl << numIncidentMuons << " # counted Muons" << G4endl;
 	#endif
