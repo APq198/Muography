@@ -26,7 +26,7 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	#ifndef ONE_THREADED
 		//G4cout << "a";
 		//std::cout << std::flush;
-		G4cout << "uiop";
+		// G4cout << "uiop";
 		//std::cout << "a";
 	#endif
 
@@ -56,9 +56,10 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 		{
 			//fEventAction->numIncidentMuons += 1;
 			G4double energy = track->GetTotalEnergy();
-			G4cout 	/*<< G4endl */ << particleName << ", "
-					<< energy;
-					/*<< G4endl;*/
+			// G4cout 	/*<< G4endl */ << particleName << ", "
+			// 		<< energy;
+			// 		/*<< G4endl;*/
+			G4cout << particleName + ", ";
 			track->SetTrackStatus(fStopAndKill);
 		}
 	}
