@@ -1,5 +1,5 @@
 #!/bin/bash
-numOfThreads=4
+numOfThreads=8
 prefix="G4W_"
 suffix="_$1"
 filename="end_$1"
