@@ -26,7 +26,7 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	#ifndef ONE_THREADED
 		//G4cout << "a";
 		//std::cout << std::flush;
-		G4cout << "u";
+		// !! G4cout << "u";
 		//std::cout << "a";
 	#endif
 
@@ -48,14 +48,18 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 		}
 	#endif
 
-	#ifdef SEARCHING_FOR_WINDOW
-		if (particleName.compare(0, 2, "mu")==0)
+
+	if (particleName.compare(0, 2, "mu")==0)
+	{
+		G4ThreeVector pos = track->GetPosition();
+		if ( pos[1] < -Y_WORLD_VAL+1*m )
 		{
-			G4ThreeVector pos = track->GetPosition();
-			if ( pos[1] < -Y_WORLD_VAL+30*m )
-			{
-				fEventAction->numIncidentMuons += 1;
-			}
+			//fEventAction->numIncidentMuons += 1;
+			G4double energy = track->GetTotalEnergy();
+			G4cout 	<< G4endl << particleName << ", "
+					<< energy
+					<< G4endl;
 		}
-	#endif
+	}
+
 }
