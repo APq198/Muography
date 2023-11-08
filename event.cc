@@ -20,6 +20,8 @@ void MyEventAction::BeginOfEventAction(const G4Event * event)
 	 */
 	// G4cout << "begin of event; " << G4endl;
 	numIncidentMuons = 0;
+	for (int i =0; i<10000; i++)
+		G4cout << "u";
 }
 
 
@@ -29,6 +31,4 @@ void MyEventAction::EndOfEventAction(const G4Event * event)
 	#ifdef SEARCHING_FOR_WINDOW
 		G4cout << G4endl << numIncidentMuons << " # counted Muons" << G4endl;
 	#endif
-	for (int i =0; i<10000; i++)
-		G4cout << "u";
 }
