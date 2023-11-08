@@ -60,10 +60,10 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 			// 		<< energy;
 			// 		/*<< G4endl;*/
 			// G4cout << particleName + ", ";
-			
+			G4cout << "u";
 			track->SetTrackStatus(fStopAndKill);
 		}
-		G4cout << "u";
+		
 	}
 
 }
