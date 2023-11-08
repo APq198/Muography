@@ -63,7 +63,7 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 			
 			track->SetTrackStatus(fStopAndKill);
 		}
+		G4cout << "u";
 	}
-	G4cout << "u";
 
 }
