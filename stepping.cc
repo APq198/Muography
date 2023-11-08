@@ -13,10 +13,10 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	//G4double edep = step->GetTotalEnergyDeposit();
 	//fEventAction->AddEdep(edep);
 	//G4cout << "something2_step" << G4endl;
-	static G4int flag = 1;
-	if (flag==1)
+	static G4int cntr = 0;
+	if (cntr<5)
 	{
-		flag = 0;
+		cntr += 1;
 		G4cout << "flag" << G4endl;;
 	}
 	//if (cntr < 1000)
