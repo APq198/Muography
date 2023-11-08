@@ -13,7 +13,12 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	//G4double edep = step->GetTotalEnergyDeposit();
 	//fEventAction->AddEdep(edep);
 	//G4cout << "something2_step" << G4endl;
-	// static G4int cntr = 0;
+	static G4int flag = 1;
+	if (flag==1)
+	{
+		flag = 0;
+		G4cout << "flag" << G4endl;;
+	}
 	//if (cntr < 1000)
 	//	G4cout << "Print many times but no that many (<1000)" << G4endl;
 	//G4cout << cntr << ") ..." << G4endl;
@@ -21,7 +26,7 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	#ifndef ONE_THREADED
 		//G4cout << "a";
 		//std::cout << std::flush;
-		G4cout << "";
+		// ! ! G4cout << "";
 		//std::cout << "a";
 	#endif
 
