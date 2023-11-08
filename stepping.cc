@@ -52,12 +52,22 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 	if (particleName.compare(0, 2, "mu")==0)
 	{
 		G4ThreeVector pos = track->GetPosition();
-		if ( pos[1] < -Y_WORLD_VAL+1000*m )
+		if ( pos[1] < -Y_WORLD_VAL+10*m )
 		{
 			//fEventAction->numIncidentMuons += 1;
-			G4double energy = track->GetTotalEnergy();
-			G4cout 	<< particleName << ", "
-					<< energy 
+			G4double energy_tot = track->GetTotalEnergy();
+			G4double energy_k = track->GetKineticEnergy();
+			G4ThreeVector pos = track->GetPosition();
+			G4ThreeVector direction = track->GetMomentumDirection().unit();
+			G4cout 	<< particleName << ","
+					<< energy_tot << ","
+					<< energy_k << ","
+					<< pos[0] << ","
+					<< pos[1] << ","
+					<< pos[2] << ","
+					<< direction[0] << ","
+					<< direction[1] << ","
+					<< direction[2] << ","
 					<< G4endl;
 			// G4cout << particleName + ", ";
 			// for (int i=0; i<10; i++)
