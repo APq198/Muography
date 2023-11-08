@@ -56,9 +56,9 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 		{
 			//fEventAction->numIncidentMuons += 1;
 			G4double energy = track->GetTotalEnergy();
-			G4cout 	<< G4endl << particleName << ", "
-					<< energy
-					<< G4endl;
+			G4cout 	/*<< G4endl */ << particleName << ", "
+					<< energy;
+					/*<< G4endl;*/
 			track->SetTrackStatus(fStopAndKill);
 		}
 	}
