@@ -164,7 +164,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	// energy
 	if (INCLUDE_HELIUM) {
 		G4double E_kin;
-		if (0) {	// 10% всіх частинок - Гелій	//G4UniformRand() < 0.1
+		if (false) {	// 10% всіх частинок - Гелій	//G4UniformRand() < 0.1
 			fParticleGun->SetParticleDefinition(alpha_particle);
 			E_kin = AlphaGenerator->generate_accurate_E() * eV;
 			G4cout << G4endl << "Launching an alpha with distributed energy, energy = " << E_kin << G4endl;
