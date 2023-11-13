@@ -26,7 +26,7 @@ class AccurateGenerator
 		G4double generate_accurate_E();
 	private:
 		G4double *energies0, *fluxes0;
-		G4double *lg_energies0, *lg_fluxes0;
+		// G4double *lg_energies0;
 		G4String particleName;
 		G4double E_min, E_max;		// should be same for every object of this class
 		G4double k, b;
