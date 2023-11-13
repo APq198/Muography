@@ -35,6 +35,8 @@ class AccurateGenerator
 		G4double phi_interpolated(G4double lgE);
 		G4double Psi(G4double);
 		G4double inverse_CDF(G4double);
+		
+		G4double my_lerp11(G4double x1, G4double x2, G4double y1, G4double y2, G4double x) {	return y1 + (x-x1)*(y2-y1)/(x2-x1);		}
 };	
 
 
