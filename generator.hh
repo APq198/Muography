@@ -16,6 +16,25 @@
 #endif
 
 
+class AccurateGenerator
+{
+	public:
+		AccurateGenerator(G4double E_min, G4double E_max, G4double k, G4double b, G4String particleName, int length, G4double * energies0_, G4double * fluxes0_);
+		~AccurateGenerator();
+		G4double generate_accurate_E();
+	private:
+		G4double *energies0, *fluxes0;
+		G4String particleName;
+		G4double E_min, E_max;		// should be same for every object of this class
+		G4double k, b;
+		G4double NC_Psi;
+		int length;
+		G4double phi_interpolated(G4double lgE);
+		G4double Psi(G4double);
+		G4double inverse_CDF(G4double);
+};	
+
+
 class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
 {
 	public:
@@ -103,7 +122,7 @@ class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
 			2.0182015668528597e-11
 		};
 		G4double phi_interpolated(G4double E);
-		G4double my_lerp(G4double x1, G4double x2, G4double y1, G4double y2, G4double x);
+		///// G4double my_lerp(G4double x1, G4double x2, G4double y1, G4double y2, G4double x);
 		G4double E_min_mes, E_max_mes;
 		G4double E_min = 100e9;//pow(10, 10);
 		G4double E_max = pow(10, 14);
@@ -113,6 +132,10 @@ class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
 		G4double Psi(G4double);
 		G4double inverse_CDF(G4double);
 		G4double generate_accurate_E();
+		AccurateGenerator * ProtonGenerator;
+		AccurateGenerator * AlphaGenerator;
 };
+
+G4double my_lerp(G4double x1, G4double x2, G4double y1, G4double y2, G4double x);
 
 #endif

@@ -30,7 +30,9 @@ void MyEventAction::EndOfEventAction(const G4Event * event)
 	#ifdef SEARCHING_FOR_WINDOW
 		G4cout << G4endl << numIncidentMuons << " # counted Muons" << G4endl;
 	#endif
-	for (int i =0; i<10000; i++)
-		G4cout << "u";
-	G4cout << G4endl;
+	#ifndef ONE_THREADED
+		for (int i =0; i<10000; i++)
+			G4cout << "u";
+		G4cout << G4endl;
+	#endif
 }
