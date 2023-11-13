@@ -300,6 +300,7 @@ G4double AccurateGenerator::generate_accurate_E()
 			return X3;
 		cntr += 1;
 		if (cntr > 1000)
-			G4cout << pow(10, phi_interpolated(log10(X3))) / (NC_Psi*Psi(X3)) << G4endl;
+			G4cout << pow(10, phi_interpolated(log10(X3))) << ",,, " << (NC_Psi*Psi(X3)) << G4endl;
+			cntr = cntr % 1000;
 	}
 }
