@@ -162,7 +162,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	}
 
 	// energy
-	if (1) {
+	if (INCLUDE_HELIUM) {
 		G4double E_kin=0;
 		//if (false) {	// 10% всіх частинок - Гелій	//G4UniformRand() < 0.1
 			//fParticleGun->SetParticleDefinition(alpha_particle);
