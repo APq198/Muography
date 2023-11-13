@@ -320,8 +320,8 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Asteroid(G4Event * anEvent
 
 AccurateGenerator_Protons::AccurateGenerator_Protons(G4double E_min, G4double E_max)
 {
-	E_min = E_min;
-	E_max = E_max;
+	//E_min = E_min;
+	//E_max = E_max;
 }
 
 G4double AccurateGenerator_Protons::phi_interpolated(G4double lgE)
@@ -351,8 +351,8 @@ G4double AccurateGenerator_Protons::generate_accurate_E()
 
 AccurateGenerator_Alpha::AccurateGenerator_Alpha(G4double E_min, G4double E_max)
 {
-	E_min = E_min;
-	E_max = E_max;
+	//E_min = E_min;
+	//E_max = E_max;
 }
 
 G4double AccurateGenerator_Alpha::phi_interpolated(G4double lgE)
