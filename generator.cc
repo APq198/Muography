@@ -226,6 +226,12 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Asteroid(G4Event * anEvent
 // ----- ===== |||| ===== ----- //
 // ----- ===== |||| ===== ----- //
 // ----- ===== |||| ===== ----- //
+// ----- ===== |||| ===== ----- //
+// ----- ===== |||| ===== ----- //
+// ----- ===== |||| ===== ----- //
+// ----- ===== |||| ===== ----- //
+// ----- ===== |||| ===== ----- //
+// ----- ===== |||| ===== ----- //
 
 AccurateGenerator::AccurateGenerator(G4double E_min_, G4double E_max_, G4double k_, G4double b_, G4String particleName_, int lenght_, G4double * energies0_, G4double * fluxes0_)
 {
@@ -238,24 +244,42 @@ AccurateGenerator::AccurateGenerator(G4double E_min_, G4double E_max_, G4double 
 	length = lenght_;
 	energies0 = energies0_;
 	fluxes0 = fluxes0_;
+	G4double *lg_energies0_ = new G4double[length];
+	for(int i=0; i<length; i++) {
+		lg_energies0_[i] = log10(energies0[i]);
+	}
+	lg_energies0 = lg_energies0_;
 }
 
 
 AccurateGenerator::~AccurateGenerator() {}
 
 
+// G4double AccurateGenerator::phi_interpolated(G4double lgE)
+// {
+// 	//eV! lgE -= 9;	//in GeV
+// 	if ( lgE < log10(energies0[0]) )//8.451046876324488 )	// min value
+// 		return 0.0;
+// 	for(int i=0; i<length-1; i++) {
+// 		if ( log10(energies0[i])<=lgE && lgE<log10(energies0[i+1]) ) {
+// 			return my_lerp(log10(energies0[i]), log10(energies0[i+1]), log10(fluxes0[i]), log10(fluxes0[i+1]), lgE);
+// 		}
+// 	}
+// 	return 0.0;
+// }
+
 G4double AccurateGenerator::phi_interpolated(G4double lgE)
 {
-	//eV! lgE -= 9;	//in GeV
 	if ( lgE < log10(energies0[0]) )//8.451046876324488 )	// min value
 		return 0.0;
 	for(int i=0; i<length-1; i++) {
-		if ( log10(energies0[i])<=lgE && lgE<log10(energies0[i+1]) ) {
+		if ( lg_energies0[i]<=lgE && lgE<lg_energies0[i+1] ) {
 			return my_lerp(log10(energies0[i]), log10(energies0[i+1]), log10(fluxes0[i]), log10(fluxes0[i+1]), lgE);
 		}
 	}
 	return 0.0;
 }
+
 
 
 G4double AccurateGenerator::Psi(G4double E) { return pow(10, b) * pow(E, k) / NC_Psi; }
