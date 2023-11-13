@@ -263,6 +263,7 @@ G4double AccurateGenerator::phi_interpolated(G4double lgE)
 	}	
 	for(int i=0; i<length-1; i++) {
 		if ( log10(energies0[i])<=lgE && lgE<log10(energies0[i+1]) ) {
+			G4cout << G4endl << "pAp " << i << G4endl;
 			return my_lerp11(log10(energies0[i]), log10(energies0[i+1]), log10(fluxes0[i]), log10(fluxes0[i+1]), lgE);
 		}
 	}
