@@ -258,11 +258,10 @@ AccurateGenerator::~AccurateGenerator() {}
 G4double AccurateGenerator::phi_interpolated(G4double lgE)
 {
 	//eV! lgE -= 9;	//in GeV
+	if ( lgE < log10(energies0[0]) ){//8.451046876324488 )	// min value
+		return 0.0;
+	}	
 	for(int i=0; i<length-1; i++) {
-		if ( lgE < log10(energies0[0]) ){//8.451046876324488 )	// min value
-			G4cout << "aaaaaaaaaa";
-			return 0.0;
-		}	
 		if ( log10(energies0[i])<=lgE && lgE<log10(energies0[i+1]) ) {
 			return my_lerp(log10(energies0[i]), log10(energies0[i+1]), log10(fluxes0[i]), log10(fluxes0[i+1]), lgE);
 		}
@@ -300,6 +299,9 @@ G4double AccurateGenerator::generate_accurate_E()
 			return X3;
 		cntr += 1;
 		if (cntr > 100)
+			G4cout << G4endl << X3 << G4endl;
+			G4cout << G4endl << log10(X3) << G4endl;
+			G4cout << G4endl << phi_interpolated(log10(X3)) << G4endl;
 			G4cout << G4endl << pow(10, phi_interpolated(log10(X3))) / (NC_Psi*Psi(X3)) << G4endl;
 			G4cout << G4endl << pow(10, phi_interpolated(log10(X3))) << ",,, " << (NC_Psi*Psi(X3)) << G4endl;
 			cntr = cntr % 100;
