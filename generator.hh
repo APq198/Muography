@@ -39,8 +39,8 @@ class AccurateGenerator
 		G4double my_lerp11(G4double x1, G4double x2, G4double y1, G4double y2, G4double x) {	
 			G4double a = y1 + (x-x1)*(y2-y1)/(x2-x1);
 			G4cout << G4endl << "aa" << a << G4endl;
-			G4cout << G4endl << "bb " << x1 << " bb " << x2 << G4endl;
-			G4cout << G4endl << "cc " << y1 << " cc " << y2 << G4endl;
+			G4cout << G4endl << "bb " << x1 << " bb " << x2 << " oo " << x << G4endl;
+			G4cout << G4endl << "cc " << y1 << " cc " << y2 <<  G4endl;
 			return a;		}
 };	
 
