@@ -158,11 +158,9 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 		G4ThreeVector direction = G4ThreeVector(  sin(theta)*cos(phi),  -1*cos(theta),  sin(theta)*sin(phi)  ).unit();
 		fParticleGun->SetParticleMomentumDirection(direction);
 	}
-	//fParticleGun->SetParticleEnergy()
 
 	// energy
-	if (INCLUDE_HELIUM)
-	{
+	if (INCLUDE_HELIUM) {
 		G4double E_kin;
 		if (G4UniformRand() < 0.1) {	// 10% всіх частинок - Гелій
 			fParticleGun->SetParticleDefinition(particleTable->FindParticle("alpha"));
