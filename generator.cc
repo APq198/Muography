@@ -292,10 +292,14 @@ G4double AccurateGenerator::inverse_CDF(G4double y) {	return pow((y * (pow(E_max
 
 G4double AccurateGenerator::generate_accurate_E()
 {
+	int cntr = 0;
 	while(1)
 	{
 		G4double X3 = inverse_CDF(G4UniformRand());
 		if(G4UniformRand() < pow(10, phi_interpolated(log10(X3))) / (NC_Psi*Psi(X3)))
 			return X3;
+		cntr += 1;
+		if (cntr > 1000)
+			G4cout << pow(10, phi_interpolated(log10(X3))) / (NC_Psi*Psi(X3)) << G4endl;
 	}
 }
