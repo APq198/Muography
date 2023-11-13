@@ -244,9 +244,10 @@ AccurateGenerator::~AccurateGenerator() {}
 
 G4double AccurateGenerator::phi_interpolated(G4double lgE)
 {
-	if ( lgE < log10(energies0[0]))//8.451046876324488 )	// min value
+	lgE -= 9;	//in GeV
+	if ( lgE < log10(energies0[0]) )//8.451046876324488 )	// min value
 		return 0.0;
-	for(int i=0; i<length-1; i++){
+	for(int i=0; i<length-1; i++) {
 		if ( log10(energies0[i])<=lgE && lgE<log10(energies0[i+1]) ) {
 			return my_lerp(log10(energies0[i]), log10(energies0[i+1]), log10(fluxes0[i]), log10(fluxes0[i+1]), lgE);
 		}

@@ -15,6 +15,8 @@
 	#include <fstream>
 #endif
 
+#define INCLUDE_HELIUM 0
+
 
 class AccurateGenerator
 {
