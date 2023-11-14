@@ -166,12 +166,14 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 			fParticleGun->SetParticleDefinition(alpha_particle);
 			E_kin = AlphaGenerator->generate_accurate_E() * eV;
 			G4cout << G4endl << "Launching an alpha with distributed energy, energy = " << E_kin << G4endl;
+			fParticleGun->SetParticleEnergy(E_kin); 	// kinetic energy is actually being set	
 		} else {					// інші 90% - протони
 			fParticleGun->SetParticleDefinition(proton_particle);
 			G4double E_kin = ProtonGenerator->generate_accurate_E() * eV;
 			G4cout << G4endl << "Launching a proton with distributed energy, energy = " << E_kin << G4endl;
+			fParticleGun->SetParticleEnergy(E_kin); 	// kinetic energy is actually being set	
 		}
-		fParticleGun->SetParticleEnergy(E_kin); 	// kinetic energy is actually being set	
+		
 	// } else if (useDistribution) {
 	// 	G4double E = generate_accurate_E() * eV;
 	// 	fParticleGun->SetParticleEnergy(E);
@@ -182,9 +184,9 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 		fParticleGun->SetParticleEnergy(energy);
 		G4cout << G4endl << "Launching a " << particleName << " with predefined(!) energy, energy = " << energy << G4endl;
 	}
-	#ifndef DONT_LAUNCH
+	//#ifndef DONT_LAUNCH
 		fParticleGun->GeneratePrimaryVertex(anEvent);
-	#endif
+	//#endif
 }
 
 void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Asteroid(G4Event * anEvent)
