@@ -160,7 +160,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	}
 
 	// energy
-	if (INCLUDE_HELIUM_NEW) {
+	if (true) {
 		G4double E_kin=0;
 		if (G4UniformRand() < 0.1) {	// 10% всіх частинок - Гелій	//G4UniformRand() < 0.1
 			fParticleGun->SetParticleDefinition(alpha_particle);
@@ -173,17 +173,17 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 			G4cout << G4endl << "Launching a proton with distributed energy, energy = " << E_kin << G4endl;
 			fParticleGun->SetParticleEnergy(E_kin); 	// kinetic energy is actually being set	
 		}
-		
+	}
 	// } else if (useDistribution) {
 	// 	G4double E = generate_accurate_E() * eV;
 	// 	fParticleGun->SetParticleEnergy(E);
 	// 	G4cout << G4endl << "Launching a " << particleName << " with distributed energy, energy = " << E << G4endl;
-	} else {
-		//fParticleGun->SetParticleMomentum(momentum);
-		//G4cout << "Launching a " << particleName << ", momentum = " << momentum << G4endl;
-		fParticleGun->SetParticleEnergy(energy);
-		G4cout << G4endl << "Launching a " << particleName << " with predefined(!) energy, energy = " << energy << G4endl;
-	}
+	// } else {
+	// 	//fParticleGun->SetParticleMomentum(momentum);
+	// 	//G4cout << "Launching a " << particleName << ", momentum = " << momentum << G4endl;
+	// 	fParticleGun->SetParticleEnergy(energy);
+	// 	G4cout << G4endl << "Launching a " << particleName << " with predefined(!) energy, energy = " << energy << G4endl;
+	// }
 	//#ifndef DONT_LAUNCH
 		fParticleGun->GeneratePrimaryVertex(anEvent);
 	//#endif
