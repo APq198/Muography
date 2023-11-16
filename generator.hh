@@ -18,7 +18,7 @@
 #define INCLUDE_HELIUM 1
 #define INCLUDE_HELIUM_NEW 1
 
-#define E_MIN_VAL 100e9
+#define E_MIN_VAL 1e12
 #define E_MAX_VAL 1e14
 
 
