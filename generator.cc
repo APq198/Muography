@@ -30,6 +30,7 @@ PrimaryGenerator::PrimaryGenerator()
 	fMessenger->DeclareProperty("setParticleName", particleName, "Change name of the primary particle");
 	fMessenger->DeclareProperty("useDistribution", useDistribution, "Whether to use distribution based on PCR fluxes (1-use, 0-use specified momentum)");
 	fMessenger->DeclareProperty("launchVertically", launchVertically, "Whether to launch PCRs vertically (only [0,-1,0])");
+	fMessenger->DeclareProperty("launchCos3Theta", cos3DistributionOverAzimuthAngle, "Whether to launch PCRs with Phi(theta)~cos3(theta)");
 	//fMessenger->DeclareProperty("setMinEnergyForDistribution", E_min_mes, "Change E_min for distributing PCR");
 	//fMessenger->DeclareProperty("setMaxEnergyForDistribution", E_max_mes, "Change E_max for distributing PCR");
 
@@ -37,7 +38,8 @@ PrimaryGenerator::PrimaryGenerator()
 	energy = 1*GeV;
 	particleName = "proton";
 	useDistribution = 1;
-	launchVertically = 1;
+	launchVertically = 0;
+	cos3DistributionOverAzimuthAngle = 1;
 	//E_min_mes = E_min;
 	//E_max_mes = E_max;
 
@@ -147,32 +149,48 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	fParticleGun->SetParticlePosition(pos);
 
 	// direction
-	if (launchVertically) {
-		G4ThreeVector direction = G4ThreeVector( 0, -1, 0 ).unit();
+	G4double zenith_angle, azimuth_angle;
+	G4ThreeVector direction;
+	if (cos3DistributionOverAzimuthAngle) {
+		while (1) {
+			zenith_angle = G4UniformRand() * PI / 2;	// theta
+			if (G4UniformRand() < pow(cos(zenith_angle), 3))
+				break;
+		}
+		azimuth_angle = G4UniformRand() * PI / 2;		// phi
+		direction = G4ThreeVector( sin(zenith_angle)*cos(azimuth_angle), -cos(zenith_angle), sin(zenith_angle)*sin(azimuth_angle) ).unit();
+		fParticleGun->SetParticleMomentumDirection(direction);
+	} else if (launchVertically) {
+		direction = G4ThreeVector( 0, -1, 0 ).unit();
 		fParticleGun->SetParticleMomentumDirection(direction);
 	} else {
 		// random
 		G4double theta_max = PI/2/10;
 		G4double theta = G4UniformRand()*theta_max;		// angle between momentum and OY axis
 		G4double phi = G4UniformRand()*2*PI;
-		G4ThreeVector direction = G4ThreeVector(  sin(theta)*cos(phi),  -1*cos(theta),  sin(theta)*sin(phi)  ).unit();
+		direction = G4ThreeVector(  sin(theta)*cos(phi),  -1*cos(theta),  sin(theta)*sin(phi)  ).unit();
 		fParticleGun->SetParticleMomentumDirection(direction);
 	}
 
 	// energy
 	if (true) {
 		G4double E_kin=0;
-		if (G4UniformRand() < 0.1) {	// 10% всіх частинок - Гелій	//G4UniformRand() < 0.1
+		if (G4UniformRand() < 0.1) {	// 10% всіх частинок - Гелій
 			fParticleGun->SetParticleDefinition(alpha_particle);
 			E_kin = AlphaGenerator->generate_accurate_E() * eV;
-			G4cout << G4endl << "Launching an alpha with distributed energy, energy = " << E_kin << G4endl;
+			G4cout << G4endl << "Launching an alpha with distributed energy, energy = " << E_kin;// << G4endl;
 			fParticleGun->SetParticleEnergy(E_kin); 	// kinetic energy is actually being set	
 		} else {					// інші 90% - протони
 			fParticleGun->SetParticleDefinition(proton_particle);
 			G4double E_kin = ProtonGenerator->generate_accurate_E() * eV;
-			G4cout << G4endl << "Launching a proton with distributed energy, energy = " << E_kin << G4endl;
-			fParticleGun->SetParticleEnergy(E_kin); 	// kinetic energy is actually being set	
+			G4cout << G4endl << "Launching a proton with distributed energy, energy = " << E_kin;// << G4endl;
+			fParticleGun->SetParticleEnergy(E_kin); 
 		}
+		G4cout <<  "," <<
+				direction[0] << "," <<
+				direction[1] << "," <<
+				direction[2] <<
+				G4endl;
 	}
 	// } else if (useDistribution) {
 	// 	G4double E = generate_accurate_E() * eV;
@@ -184,9 +202,9 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	// 	fParticleGun->SetParticleEnergy(energy);
 	// 	G4cout << G4endl << "Launching a " << particleName << " with predefined(!) energy, energy = " << energy << G4endl;
 	// }
-	//#ifndef DONT_LAUNCH
+	#ifndef DONT_LAUNCH
 		fParticleGun->GeneratePrimaryVertex(anEvent);
-	//#endif
+	#endif
 }
 
 void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Asteroid(G4Event * anEvent)
