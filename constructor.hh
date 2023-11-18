@@ -14,6 +14,7 @@
 
 
 #define USE_STANDARD_ATMOSPHERE 1
+#define MARTIAN_SURFACE 1
 
 #ifndef USE_STANDARD_ATMOSPHERE
 	#define Y_WORLD_VAL 40*km		// for usual (not standard atmosphere)
@@ -41,6 +42,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 		void ConstructSimpleAtmosphere(G4NistManager *, G4LogicalVolume*);
 		G4VPhysicalVolume * ConstructAsteroidScene();
 		G4VPhysicalVolume * ConstructSurfaceScene();
+		G4VPhysicalVolume * ConstructSurfaceScene_MartianAtmosphere();
 		G4LogicalVolume *logicWorld;
 		G4VPhysicalVolume * physWorld;
 		G4LogicalVolume *logicDetector = nullptr;
