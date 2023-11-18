@@ -14,7 +14,6 @@
 
 
 #define USE_STANDARD_ATMOSPHERE 1
-#define MARTIAN_SURFACE 1
 
 #ifndef USE_STANDARD_ATMOSPHERE
 	#define Y_WORLD_VAL 40*km		// for usual (not standard atmosphere)

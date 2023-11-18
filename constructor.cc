@@ -1,6 +1,7 @@
 #include "constructor.hh"
 #include "CADMesh.hh"		// Easy 3d models --- https://github.com/christopherpoole/CADMesh
 
+#define MARTIAN_SURFACE 1
 
 DetectorConstruction::DetectorConstruction()
 {}
@@ -322,10 +323,10 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene_MartianAtmospher
 	G4double aO = 16 *g/mole;
 	G4double aC = 12 *g/mole;
 	G4double aAr = 39.79 *g/mole;
-	G4Element * elN = new G4Element("Nitrogen", "N", 7, aN);
+	//G4Element * elN = new G4Element("Nitrogen", "N", 7, aN);
 	G4Element * elO = new G4Element("Oxygen", "O", 8, aO);
-	G4Element * elC = new G4Element("Carbon", "C", 6, aN);
-	G4Element * elAr = new G4Element("Argon", "Ar", 18, aAr);
+	G4Element * elC = nist->FindOrBuildElement("C");//new G4Element("Carbon", "C", 6, aN);
+	//G4Element * elAr = new G4Element("Argon", "Ar", 18, aAr);
 	//G4Material * CO2 = new G4Material("Carbon Dioxide CO2", )
 
 	for (G4int i=0; i < 15; i++)	// 15 - lower than 40 km (see table)
@@ -339,10 +340,10 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene_MartianAtmospher
 		Air[i] = new G4Material("MARTIAN_AIR_" + stri.str(), density, 2 );
 		//Air[i]->AddElement(elN, 79*perCent);
 		//Air[i]->AddElement(elO, 21*perCent);
-		Air[i]->AddElement(elC, 31.67*perCent);
-		Air[i]->AddElement(elO, 63.33*perCent);
-		Air[i]->AddElement(elN, 1.5*perCent);
-		Air[i]->AddElement(elAr, 2*perCent);
+		Air[i]->AddElement(elC, 27.3*perCent);
+		Air[i]->AddElement(elO, 72.7*perCent);
+		//Air[i]->AddElement(elN, 3*perCent);
+		//Air[i]->AddElement(elAr, 2*perCent);
 		
 		solidLayer[i] = new G4Box("solidLayer", xWorld, deltaY/2.0 , zWorld);
 		logicLayer[i] = new G4LogicalVolume(solidLayer[i], Air[i], "logicLayer");
@@ -358,7 +359,7 @@ G4VPhysicalVolume * DetectorConstruction::Construct()
 	//G4VPhysicalVolume * physWorld = ConstructAsteroidScene();
 	detectorHeight = 10*m;
 	if (MARTIAN_SURFACE) 
-		G4VPhysicalVolume * physWorld = ConstructSurfaceScene();
+		G4VPhysicalVolume * physWorld = ConstructSurfaceScene_MartianAtmosphere();
 	else
 		G4VPhysicalVolume * physWorld = ConstructSurfaceScene();
 	//ConstructOmniDetector();
