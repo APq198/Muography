@@ -270,8 +270,8 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene_MartianAtmospher
 	G4Material *worldMat = nist->FindOrBuildMaterial("G4_Galactic");
 
 	yWorld = Y_WORLD_VAL;
-	xWorld = 20*km;
-	zWorld = 20*km;
+	xWorld = 60*km;
+	zWorld = 60*km;
 
 	G4int altitude_mars[] = {
 		0,
