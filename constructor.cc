@@ -115,8 +115,8 @@ G4VPhysicalVolume * DetectorConstruction::ConstructSurfaceScene()
 	G4Material *worldMat = nist->FindOrBuildMaterial("G4_Galactic");
 
 	yWorld = Y_WORLD_VAL;
-	xWorld = 20*km;
-	zWorld = 20*km;
+	xWorld = 80*km;
+	zWorld = 80*km;
 
 	#ifdef USE_STANDARD_ATMOSPHERE
 		G4int altitude_stand[] = {
