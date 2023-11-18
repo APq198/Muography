@@ -1,7 +1,7 @@
 #include "constructor.hh"
 #include "CADMesh.hh"		// Easy 3d models --- https://github.com/christopherpoole/CADMesh
 
-#define MARTIAN_SURFACE 1
+#define MARTIAN_SURFACE 0
 
 DetectorConstruction::DetectorConstruction()
 {}
