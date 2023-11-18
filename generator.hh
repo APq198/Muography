@@ -116,6 +116,7 @@ class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
 		G4bool useDistribution;
 		G4bool launchVertically;
 		G4bool cos3DistributionOverAzimuthAngle;
+		G4bool sin2aDistribution;
 		static const unsigned int numOfPoints = 29;
 		//G4double energies0[29];
 		//G4double fluxes0[29];

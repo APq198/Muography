@@ -33,13 +33,15 @@ PrimaryGenerator::PrimaryGenerator()
 	fMessenger->DeclareProperty("launchCos3Theta", cos3DistributionOverAzimuthAngle, "Whether to launch PCRs with Phi(theta)~cos3(theta)");
 	//fMessenger->DeclareProperty("setMinEnergyForDistribution", E_min_mes, "Change E_min for distributing PCR");
 	//fMessenger->DeclareProperty("setMaxEnergyForDistribution", E_max_mes, "Change E_max for distributing PCR");
-
+	fMessenger->DeclareProperty("sin2aDistribution", sin2aDistribution, "Phi~sin(2*theta)");
+	
 	momentum = 1*GeV;
 	energy = 1*GeV;
 	particleName = "proton";
 	useDistribution = 1;
 	launchVertically = 0;
-	cos3DistributionOverAzimuthAngle = 1;
+	cos3DistributionOverAzimuthAngle = 0;
+	sin2aDistribution = 1;
 	//E_min_mes = E_min;
 	//E_max_mes = E_max;
 
@@ -151,7 +153,16 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	// direction
 	G4double zenith_angle, azimuth_angle;
 	G4ThreeVector direction;
-	if (cos3DistributionOverAzimuthAngle) {		//тут треба щось робити з dOmega - тілесним кутом? На кшталт ~sin(2theta)
+	if (sin2aDistribution) {
+		while (1) {
+			zenith_angle = G4UniformRand() * PI / 2;	// theta
+			if (G4UniformRand() < cos(2*zenith_angle))
+				break;
+		}
+		azimuth_angle = G4UniformRand() * PI / 2;		// phi
+		direction = G4ThreeVector( sin(zenith_angle)*cos(azimuth_angle), -cos(zenith_angle), sin(zenith_angle)*sin(azimuth_angle) ).unit();
+		fParticleGun->SetParticleMomentumDirection(direction);
+	} else if (cos3DistributionOverAzimuthAngle) {		//тут треба щось робити з dOmega - тілесним кутом? На кшталт ~sin(2theta)
 		while (1) {
 			zenith_angle = G4UniformRand() * PI / 2;	// theta
 			if (G4UniformRand() < pow(cos(zenith_angle), 3))
