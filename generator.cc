@@ -156,7 +156,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	if (sin2aDistribution) {
 		while (1) {
 			zenith_angle = G4UniformRand() * PI / 2;	// theta
-			if (G4UniformRand() < cos(2*zenith_angle))
+			if (G4UniformRand() < sin(2*zenith_angle))
 				break;
 		}
 		azimuth_angle = G4UniformRand() * PI / 2;		// phi
