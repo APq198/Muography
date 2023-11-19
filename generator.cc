@@ -165,7 +165,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 	} else if (cos3DistributionOverAzimuthAngle) {		//тут треба щось робити з dOmega - тілесним кутом? На кшталт ~sin(2theta)
 		while (1) {
 			zenith_angle = G4UniformRand() * PI / 2;	// theta
-			if (G4UniformRand() < pow(cos(zenith_angle), 3))
+			if (G4UniformRand() < pow(cos(zenith_angle), 1))
 				break;
 		}
 		azimuth_angle = G4UniformRand() * PI * 2;		// phi
