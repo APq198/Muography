@@ -1,5 +1,7 @@
 #include "stepping.hh"
 
+#define FIND_HEIGHTS
+
 MySteppingAction::MySteppingAction(MyEventAction * eventAction)
 {
 	fEventAction = eventAction;
@@ -77,5 +79,14 @@ void MySteppingAction::UserSteppingAction(const G4Step * step)
 		//G4cout << "mu!" << G4endl;
 		
 	}
+
+	#ifdef FIND_HEIGHTS
+		if (particleName.compare(0, 2, "mu")==0)
+		{
+			G4ThreeVector pos = track->GetPosition();
+			G4cout << particleName << ", h = " << pos[1] << G4endl;
+			track->SetTrackStatus(fStopAndKill);
+		}
+	#endif
 
 }

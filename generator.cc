@@ -40,8 +40,8 @@ PrimaryGenerator::PrimaryGenerator()
 	particleName = "proton";
 	useDistribution = 1;
 	launchVertically = 0;
-	cos3DistributionOverAzimuthAngle = 0;
-	sin2aDistribution = 1;
+	cos3DistributionOverAzimuthAngle = 1;
+	sin2aDistribution = 0;
 	//E_min_mes = E_min;
 	//E_max_mes = E_max;
 
@@ -159,7 +159,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 			if (G4UniformRand() < sin(2*zenith_angle))
 				break;
 		}
-		azimuth_angle = G4UniformRand() * PI / 2;		// phi
+		azimuth_angle = G4UniformRand() * PI * 2;		// phi
 		direction = G4ThreeVector( sin(zenith_angle)*cos(azimuth_angle), -cos(zenith_angle), sin(zenith_angle)*sin(azimuth_angle) ).unit();
 		fParticleGun->SetParticleMomentumDirection(direction);
 	} else if (cos3DistributionOverAzimuthAngle) {		//тут треба щось робити з dOmega - тілесним кутом? На кшталт ~sin(2theta)
@@ -168,7 +168,7 @@ void PrimaryGenerator::MyGeneratePrimaries_CosmicRays_Surface(G4Event * anEvent)
 			if (G4UniformRand() < pow(cos(zenith_angle), 3))
 				break;
 		}
-		azimuth_angle = G4UniformRand() * PI / 2;		// phi
+		azimuth_angle = G4UniformRand() * PI * 2;		// phi
 		direction = G4ThreeVector( sin(zenith_angle)*cos(azimuth_angle), -cos(zenith_angle), sin(zenith_angle)*sin(azimuth_angle) ).unit();
 		fParticleGun->SetParticleMomentumDirection(direction);
 	} else if (launchVertically) {
