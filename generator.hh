@@ -20,7 +20,8 @@
 
 #define E_MIN_VAL 100e9
 #define E_MAX_VAL 1e14
-
+// #define E_MIN_VAL 100e6 	// for testing purposes
+// #define E_MAX_VAL 1e9
 
 class AccurateGenerator
 {

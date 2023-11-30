@@ -12,14 +12,18 @@
 
 #include "detector.hh"
 
+#define MARTIAN_SURFACE 0	//if
 
-#define USE_STANDARD_ATMOSPHERE 1
+//#define USE_STANDARD_ATMOSPHERE 1	// always
 
 #ifndef USE_STANDARD_ATMOSPHERE
 	#define Y_WORLD_VAL 40*km		// for usual (not standard atmosphere)
 #else
 	#define Y_WORLD_VAL 40*km		// for standard atmosphere 
 #endif
+//#define LONG_BOX 1			//if	// always
+#define R 40*km
+#define X_WORLD_VAL 0.5*(Y_WORLD_VAL*tan(THETA_MAX)+R)
 
 
 class DetectorConstruction : public G4VUserDetectorConstruction
@@ -47,7 +51,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
 		G4LogicalVolume *logicDetector = nullptr;
 		virtual void ConstructSDandField();
 		//G4Material Air[10];
-		G4double xWorld, zWorld, detectorHeight;
+		G4double xWorld, zWorld;
 		G4NistManager * nist;
 };
 
