@@ -1,6 +1,5 @@
 #include "stepping.hh"
 
-#define FIND_HEIGHTS
 
 MySteppingAction::MySteppingAction(MyEventAction * eventAction)
 {
